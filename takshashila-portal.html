@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learning Portal — The Takshashila Institution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+/* ─────────────────────────────────────────────────────────
+   TAKSHASHILA INSTITUTION — EXACT STYLE TOKENS
+   Source: takshashila.org.in (observed via browser/screenshots)
+───────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Core palette */
+  --ti-red:      #E8212A;   /* brand red — logo, CTAs, accents   */
+  --ti-red-dk:   #C41920;   /* hover state                        */
+  --ti-black:    #111111;   /* primary text, footer bg            */
+  --ti-dark:     #1a1a1a;   /* footer, dark surfaces              */
+  --ti-gray-900: #222222;
+  --ti-gray-700: #444444;
+  --ti-gray-500: #666666;
+  --ti-gray-400: #888888;
+  --ti-gray-200: #E5E5E5;   /* borders                            */
+  --ti-gray-100: #F5F5F5;   /* section backgrounds                */
+  --ti-gray-50:  #FAFAFA;   /* subtle card bg                     */
+  --ti-white:    #FFFFFF;
+
+  /* Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --nav-h: 64px;
+
+  /* Borders & radius */
+  --r:    6px;
+  --r-sm: 4px;
+  --border: 1px solid var(--ti-gray-200);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: var(--font);
+  background: var(--ti-white);
+  color: var(--ti-black);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── PAGE ROUTING ─────────────────────────────────────── */
+.page { display: none; min-height: 100vh; flex-direction: column; }
+.page.active { display: flex; }
+
+/* ─── SHARED NAV ────────────────────────────────────────── */
+.ti-nav {
+  height: var(--nav-h);
+  background: var(--ti-white);
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  flex-shrink: 0;
+}
+
+/* SVG logo — redraws Takshashila's wordmark faithfully */
+.ti-logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+}
+.ti-logo svg { height: 36px; width: auto; }
+
+.ti-nav-meta {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ti-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-left: var(--border);
+  margin-left: 16px;
+  padding-left: 16px;
+}
+
+.ti-nav-right { display: flex; align-items: center; gap: 12px; }
+
+.ti-nav-user {
+  font-size: 13px;
+  color: var(--ti-gray-500);
+  font-weight: 400;
+}
+.ti-nav-user strong { color: var(--ti-black); font-weight: 600; }
+
+.ti-nav-signout {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ti-gray-500);
+  background: none;
+  border: var(--border);
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: color .15s, border-color .15s;
+}
+.ti-nav-signout:hover { color: var(--ti-red); border-color: var(--ti-red); }
+
+/* ─── PAGE SHELL ────────────────────────────────────────── */
+.page-shell { flex: 1; overflow-y: auto; }
+.page-body  { max-width: 1040px; margin: 0 auto; padding: 3rem 2rem; }
+.page-body.narrow { max-width: 840px; }
+
+/* page title bar — red left rule like TI section headers */
+.pg-title { margin-bottom: 2.5rem; }
+.pg-title h1 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--ti-black);
+  letter-spacing: -.3px;
+}
+.pg-title p {
+  margin-top: .375rem;
+  font-size: 14px;
+  color: var(--ti-gray-500);
+}
+
+/* section divider — red rule, exactly as on ti site */
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.section-rule::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 20px;
+  background: var(--ti-red);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.section-rule span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ti-gray-500);
+}
+
+/* ─── CARDS ─────────────────────────────────────────────── */
+.card {
+  background: var(--ti-white);
+  border: var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.card-hd {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ti-gray-700);
+  margin-bottom: 1rem;
+}
+
+/* steps — light grey bg, red step number */
+.steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+.step {
+  background: var(--ti-gray-100);
+  border: var(--border);
+  border-radius: var(--r);
+  padding: 1.375rem;
+  border-top: 3px solid var(--ti-red);
+}
+.step-n { font-size: 10px; font-weight: 700; color: var(--ti-red); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: .5rem; }
+.step h3 { font-size: .9375rem; font-weight: 700; color: var(--ti-black); margin-bottom: .3rem; }
+.step p { font-size: 13px; color: var(--ti-gray-500); line-height: 1.5; }
+
+/* upload zone */
+.upload-zone {
+  border: 2px dashed var(--ti-gray-200);
+  border-radius: var(--r);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--ti-gray-50);
+  transition: border-color .2s, background .2s;
+}
+.upload-zone:hover,.upload-zone.over {
+  border-color: var(--ti-red);
+  background: #fff5f5;
+}
+.upload-zone input[type=file] { display: none; }
+.upload-zone .uz-icon { font-size: 1.75rem; display: block; margin-bottom: .5rem; }
+.upload-zone h4 { font-size: 14px; font-weight: 600; color: var(--ti-black); margin-bottom: .25rem; }
+.upload-zone p { font-size: 13px; color: var(--ti-gray-400); }
+
+/* table */
+.table-wrap {
+  border: var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+table.dt { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.dt th {
+  text-align: left;
+  padding: 9px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--ti-gray-400);
+  background: var(--ti-gray-50);
+  border-bottom: var(--border);
+}
+table.dt td {
+  padding: 10px 14px;
+  border-bottom: var(--border);
+  color: var(--ti-gray-700);
+  vertical-align: middle;
+}
+table.dt tr:last-child td { border-bottom: none; }
+table.dt tr:hover td { background: var(--ti-gray-50); }
+.st-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.dot-pending { background: #F59E0B; }
+.dot-sent    { background: #10B981; }
+
+/* chips */
+.chip-ok {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500;
+  color: #065F46; background: #ECFDF5;
+  border: 1px solid #6EE7B7;
+  padding: 5px 12px; border-radius: 20px; margin-top: .5rem;
+}
+.chip-warn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #92400E; background: #FFFBEB;
+  border: 1px solid #FCD34D;
+  padding: 4px 10px; border-radius: 20px; margin-top: .35rem;
+}
+
+/* ─── BUTTONS ───────────────────────────────────────────── */
+/* Primary — TI red, used for main CTAs */
+.btn-primary {
+  background: var(--ti-red);
+  color: var(--ti-white);
+  border: none;
+  padding: 11px 24px;
+  border-radius: var(--r-sm);
+  font: 600 14px/1 var(--font);
+  cursor: pointer;
+  letter-spacing: .1px;
+  transition: background .15s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--ti-red-dk); }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Secondary — outlined */
+.btn-outline {
+  background: var(--ti-white);
+  color: var(--ti-black);
+  border: var(--border);
+  padding: 9px 18px;
+  border-radius: var(--r-sm);
+  font: 500 13px/1 var(--font);
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-outline:hover { border-color: var(--ti-red); color: var(--ti-red); }
+
+/* Subtle — grey */
+.btn-sm {
+  background: var(--ti-gray-100);
+  color: var(--ti-gray-700);
+  border: var(--border);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font: 500 12px/1 var(--font);
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-sm:hover { background: var(--ti-gray-200); }
+
+/* full-width */
+.btn-block { width: 100%; justify-content: center; }
+
+/* ─── FORM ELEMENTS ─────────────────────────────────────── */
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--ti-gray-500);
+  margin-bottom: 5px;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  border: var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  font: 400 14px/1.5 var(--font);
+  background: var(--ti-white);
+  color: var(--ti-black);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus, .field textarea:focus {
+  border-color: var(--ti-red);
+  box-shadow: 0 0 0 3px rgba(232,33,42,.08);
+}
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.err-msg { font-size: 13px; color: var(--ti-red); margin-top: .4rem; display: none; }
+
+/* ─── API KEY ────────────────────────────────────────────── */
+.key-row { display: flex; gap: 8px; }
+.key-row input {
+  flex: 1;
+  border: var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  font: 400 14px/1 var(--font);
+  background: var(--ti-white);
+  color: var(--ti-black);
+  outline: none;
+}
+.key-row input:focus { border-color: var(--ti-red); }
+.key-status { font-size: 12px; color: var(--ti-gray-400); margin-top: 5px; }
+.api-warn {
+  background: #FFFBEB; border: 1px solid #FCD34D;
+  border-radius: var(--r-sm); padding: 10px 13px;
+  font-size: 13px; color: #92400E; margin-bottom: .875rem;
+}
+
+/* ─── PROGRESS / LOG ─────────────────────────────────────── */
+.progress-bar { height: 3px; background: var(--ti-gray-200); border-radius: 2px; margin-top: 1rem; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--ti-red); border-radius: 2px; transition: width .4s ease; width: 0%; }
+.log {
+  font-size: 12px;
+  color: #aaa;
+  background: #111;
+  border-radius: var(--r-sm);
+  padding: .875rem;
+  max-height: 170px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  line-height: 1.9;
+  margin-top: .875rem;
+}
+.log .ok  { color: #4ade80; }
+.log .er  { color: #f87171; }
+.log .inf { color: #93c5fd; }
+
+/* ─── ADMIN TABS ─────────────────────────────────────────── */
+.a-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--ti-gray-200);
+  margin-bottom: 2rem;
+  gap: 0;
+}
+.a-tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font: 500 13px/1 var(--font);
+  cursor: pointer;
+  color: var(--ti-gray-500);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s, border-color .15s;
+  letter-spacing: .1px;
+}
+.a-tab.active { color: var(--ti-red); border-bottom-color: var(--ti-red); font-weight: 600; }
+.a-tab:hover:not(.active) { color: var(--ti-black); }
+
+/* ─── ADMIN SUMMARIES ────────────────────────────────────── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .875rem;
+  margin-bottom: 2rem;
+}
+.stat-box {
+  background: var(--ti-gray-100);
+  border: var(--border);
+  border-radius: var(--r);
+  padding: 1.125rem 1.25rem;
+}
+.stat-box .num {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ti-red);
+  line-height: 1;
+}
+.stat-box .lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ti-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+
+.search-row { display: flex; gap: 10px; margin-bottom: 1.25rem; }
+.search-row input {
+  flex: 1;
+  border: var(--border);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  font: 400 13px/1 var(--font);
+  color: var(--ti-black);
+  outline: none;
+}
+.search-row input:focus { border-color: var(--ti-red); }
+.search-row select {
+  border: var(--border);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  font: 400 13px/1 var(--font);
+  color: var(--ti-black);
+  background: var(--ti-white);
+  outline: none;
+  cursor: pointer;
+}
+
+/* student accordion */
+.ssb { border: var(--border); border-radius: var(--r); margin-bottom: .75rem; overflow: hidden; }
+.ssb-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .875rem 1.125rem;
+  cursor: pointer; user-select: none;
+  transition: background .15s;
+}
+.ssb-head:hover { background: var(--ti-gray-50); }
+.ssb-hl { display: flex; align-items: center; gap: 12px; }
+.ssb-av {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--ti-red);
+  color: var(--ti-white);
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ssb-name { font-size: 14px; font-weight: 600; color: var(--ti-black); }
+.ssb-meta { font-size: 12px; color: var(--ti-gray-400); margin-top: 1px; }
+.ssb-hr { display: flex; align-items: center; gap: 10px; }
+.ssb-badge {
+  font-size: 11px; font-weight: 600;
+  background: var(--ti-red); color: var(--ti-white);
+  padding: 2px 9px; border-radius: 20px;
+}
+.ssb-badge.zero { background: var(--ti-gray-200); color: var(--ti-gray-400); }
+.ssb-chev { font-size: 10px; color: var(--ti-gray-400); transition: transform .2s; }
+.ssb-chev.open { transform: rotate(180deg); }
+.ssb-body { display: none; border-top: var(--border); padding: 1.125rem; background: var(--ti-gray-50); }
+.ssb-body.open { display: block; }
+.ssb-item { background: var(--ti-white); border: var(--border); border-radius: var(--r-sm); padding: 1.125rem; margin-bottom: .625rem; }
+.ssb-item:last-child { margin-bottom: 0; }
+.ssb-item-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: .625rem; }
+.ssb-item-title { font-size: 14px; font-weight: 600; color: var(--ti-black); }
+.ssb-item-date  { font-size: 12px; color: var(--ti-gray-400); white-space: nowrap; margin-left: 1rem; }
+.ssb-item-body  { font-size: 13px; line-height: 1.75; color: var(--ti-gray-700); }
+.ssb-item-body strong { color: var(--ti-black); font-weight: 600; }
+.ssb-item-body h3 { font-size: 13px; font-weight: 700; color: var(--ti-red); margin: .9em 0 .3em; text-transform: uppercase; letter-spacing: .5px; }
+.ssb-empty { font-size: 13px; color: var(--ti-gray-400); text-align: center; padding: 1.5rem; }
+.no-results { text-align: center; padding: 3rem 1rem; font-size: 14px; color: var(--ti-gray-400); }
+
+/* ─── STUDENT PAGE ───────────────────────────────────────── */
+/* Hero — red top border strip, white bg */
+.s-hero {
+  border-top: 4px solid var(--ti-red);
+  background: var(--ti-gray-100);
+  border: var(--border);
+  border-radius: var(--r);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.s-hero-left h2 { font-size: 1.375rem; font-weight: 700; color: var(--ti-black); }
+.s-hero-left p  { font-size: 13px; color: var(--ti-gray-400); margin-top: 3px; }
+.s-hero-badge {
+  font-size: 11px; font-weight: 700;
+  color: var(--ti-red);
+  border: 1px solid var(--ti-red);
+  padding: 4px 12px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+.profile-grid .wide { grid-column: 1 / -1; }
+
+.tag-input-row { display: flex; gap: 8px; margin-bottom: .5rem; }
+.tag-input-row input {
+  flex: 1; border: var(--border); border-radius: var(--r-sm);
+  padding: 8px 12px; font: 400 13px/1 var(--font);
+  background: var(--ti-white); color: var(--ti-black); outline: none;
+}
+.tag-input-row input:focus { border-color: var(--ti-red); }
+.tag-input-row button {
+  background: var(--ti-red); color: var(--ti-white);
+  border: none; padding: 8px 14px; border-radius: var(--r-sm);
+  font: 500 13px/1 var(--font); cursor: pointer; transition: background .15s;
+}
+.tag-input-row button:hover { background: var(--ti-red-dk); }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  background: var(--ti-gray-100);
+  border: var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--ti-gray-700);
+  display: flex; align-items: center; gap: 6px;
+}
+.tag button { background: none; border: none; cursor: pointer; color: var(--ti-gray-400); font-size: 14px; padding: 0; line-height: 1; }
+.tag button:hover { color: var(--ti-red); }
+
+.saved-flash { font-size: 13px; color: #065F46; display: none; margin-left: 8px; }
+
+/* summaries */
+.sum-list { display: flex; flex-direction: column; gap: 1rem; }
+.sum-card { border: var(--border); border-radius: var(--r); overflow: hidden; }
+.sum-card-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1rem 1.25rem;
+  border-bottom: var(--border);
+  background: var(--ti-gray-50);
+}
+.sum-card-title { font-size: 15px; font-weight: 700; color: var(--ti-black); }
+.sum-card-date  { font-size: 12px; color: var(--ti-gray-400); white-space: nowrap; margin-left: 1rem; flex-shrink: 0; }
+.sum-card-body  { padding: 1.25rem; font-size: 14px; line-height: 1.8; color: var(--ti-gray-700); }
+.sum-card-body strong { color: var(--ti-black); font-weight: 600; }
+.sum-card-body h3 { font-size: 13px; font-weight: 700; color: var(--ti-red); margin: 1em 0 .35em; text-transform: uppercase; letter-spacing: .5px; }
+.sum-card-foot {
+  padding: .75rem 1.25rem;
+  border-top: var(--border);
+  background: var(--ti-gray-50);
+  display: flex; gap: 8px; align-items: center;
+}
+.action-flash { font-size: 12px; color: #065F46; display: none; margin-left: 4px; }
+
+.empty-state { text-align: center; padding: 4rem 1rem; }
+.empty-state .icon { font-size: 2.25rem; display: block; margin-bottom: .75rem; opacity: .4; }
+.empty-state p { font-size: 14px; color: var(--ti-gray-400); line-height: 1.7; }
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+.ti-footer {
+  background: var(--ti-dark);
+  border-top: 3px solid var(--ti-red);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.ti-footer p { font-size: 12px; color: rgba(255,255,255,.4); }
+.ti-footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+.ti-footer a:hover { color: var(--ti-white); }
+
+/* ─── SPINNER ────────────────────────────────────────────── */
+.spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── LOGIN PAGE ─────────────────────────────────────────── */
+#page-login {
+  background: var(--ti-gray-100);
+  align-items: stretch;
+}
+.login-wrap {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  min-height: 100vh;
+  width: 100%;
+}
+/* Left — institutional hero panel */
+.login-left {
+  background: var(--ti-dark);
+  padding: 4rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.login-left::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--ti-red);
+}
+.ll-logo { display: flex; align-items: center; gap: 0; }
+.ll-logo svg { height: 40px; width: auto; }
+
+.ll-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 3rem 0; }
+.ll-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--ti-red);
+  margin-bottom: 1.25rem;
+}
+.ll-headline {
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ti-white);
+  letter-spacing: -.5px;
+  margin-bottom: 1.5rem;
+}
+.ll-headline em {
+  color: var(--ti-red);
+  font-style: normal;
+}
+.ll-body-text {
+  font-size: 15px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.75;
+  max-width: 420px;
+}
+.ll-tagline {
+  font-size: 11px;
+  color: rgba(255,255,255,.25);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Right — form panel */
+.login-right {
+  background: var(--ti-white);
+  border-left: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+}
+.login-card { width: 100%; max-width: 360px; }
+.login-card h2 { font-size: 1.25rem; font-weight: 700; color: var(--ti-black); margin-bottom: .25rem; }
+.login-card .sub { font-size: 14px; color: var(--ti-gray-400); margin-bottom: 2rem; }
+.tab-row { display: flex; border: var(--border); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 1.75rem; }
+.tab-btn { flex: 1; padding: 9px 12px; border: none; background: none; font: 500 13px/1 var(--font); cursor: pointer; color: var(--ti-gray-500); transition: background .15s, color .15s; }
+.tab-btn.active { background: var(--ti-red); color: var(--ti-white); }
+.tab-btn:hover:not(.active) { background: var(--ti-gray-100); color: var(--ti-black); }
+.login-hint { font-size: 12px; color: var(--ti-gray-400); text-align: center; margin-top: .75rem; }
+.login-hint code { background: var(--ti-gray-100); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--ti-gray-700); }
+
+@media (max-width: 720px) {
+  .login-wrap { grid-template-columns: 1fr; }
+  .login-left { display: none; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .profile-grid .wide { grid-column: 1; }
+  .s-hero { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     INLINE SVG LOGO  (replicates TI wordmark)
+     White version for dark surfaces,
+     Dark version for light surfaces
+══════════════════════════════════════════ -->
+<template id="logo-dark">
+  <!-- Takshashila wordmark — dark/black on white -->
+  <svg viewBox="0 0 220 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The Takshashila Institution">
+    <text x="0" y="28" font-family="Inter,sans-serif" font-weight="700" font-size="20" fill="#111111">Takshashila</text>
+    <rect x="0" y="33" width="220" height="2.5" fill="#E8212A" rx="1"/>
+    <text x="0" y="54" font-family="Inter,sans-serif" font-weight="400" font-size="10" fill="#666666" letter-spacing="1">INSTITUTION</text>
+  </svg>
+</template>
+<template id="logo-white">
+  <!-- Takshashila wordmark — white on dark -->
+  <svg viewBox="0 0 220 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The Takshashila Institution">
+    <text x="0" y="28" font-family="Inter,sans-serif" font-weight="700" font-size="20" fill="#FFFFFF">Takshashila</text>
+    <rect x="0" y="33" width="220" height="2.5" fill="#E8212A" rx="1"/>
+    <text x="0" y="54" font-family="Inter,sans-serif" font-weight="400" font-size="10" fill="rgba(255,255,255,0.45)" letter-spacing="1">INSTITUTION</text>
+  </svg>
+</template>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE: LOGIN
+══════════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="login-wrap">
+
+    <!-- Left panel -->
+    <div class="login-left">
+      <div class="ll-logo">
+        <svg viewBox="0 0 220 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto">
+          <text x="0" y="28" font-family="Inter,sans-serif" font-weight="700" font-size="20" fill="#FFFFFF">Takshashila</text>
+          <rect x="0" y="33" width="135" height="2.5" fill="#E8212A" rx="1"/>
+          <text x="0" y="48" font-family="Inter,sans-serif" font-weight="400" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="2">INSTITUTION</text>
+        </svg>
+      </div>
+
+      <div class="ll-body">
+        <p class="ll-eyebrow">Learning Portal</p>
+        <h1 class="ll-headline">Personalised<br/>summaries for<br/>every <em>student.</em></h1>
+        <p class="ll-body-text">AI-powered session summaries tailored to your background, profession, and goals — delivered to your inbox after every class.</p>
+      </div>
+
+      <p class="ll-tagline">Freedom · Openness · Responsible Citizenship</p>
+    </div>
+
+    <!-- Right: form -->
+    <div class="login-right">
+      <div class="login-card">
+        <h2>Sign in</h2>
+        <p class="sub">Access your Learning Portal account</p>
+
+        <div class="tab-row">
+          <button class="tab-btn active" id="tab-student" onclick="switchTab('student')">Student</button>
+          <button class="tab-btn"        id="tab-admin"   onclick="switchTab('admin')">Admin</button>
+        </div>
+
+        <!-- Student form -->
+        <div id="form-student">
+          <div class="field"><label>Email address</label><input type="email" id="sl-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')studentLogin()"/></div>
+          <div class="field"><label>Password</label><input type="password" id="sl-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')studentLogin()"/></div>
+          <div class="err-msg" id="sl-err"></div>
+          <button class="btn-primary btn-block" style="margin-top:.625rem" onclick="studentLogin()">Sign in</button>
+          <p class="login-hint">Default password: the part of your email before @</p>
+        </div>
+
+        <!-- Admin form -->
+        <div id="form-admin" style="display:none">
+          <div class="field"><label>Admin password</label><input type="password" id="al-pass" placeholder="admin123" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+          <div class="err-msg" id="al-err"></div>
+          <button class="btn-primary btn-block" style="margin-top:.625rem" onclick="adminLogin()">Sign in as Admin</button>
+          <p class="login-hint">Default: <code>admin123</code></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /page-login -->
+
+
+<!-- ══════════════════════════════════════════
+     PAGE: ADMIN
+══════════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <nav class="ti-nav">
+    <div style="display:flex;align-items:center">
+      <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto">
+        <text x="0" y="26" font-family="Inter,sans-serif" font-weight="700" font-size="18" fill="#111111">Takshashila</text>
+        <rect x="0" y="31" width="112" height="2" fill="#E8212A" rx="1"/>
+      </svg>
+      <span class="ti-nav-meta">Learning Portal</span>
+    </div>
+    <div class="ti-nav-right">
+      <span class="ti-nav-user"><strong>Admin</strong></span>
+      <button class="ti-nav-signout" onclick="logout()">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <div class="page-body">
+
+      <div class="pg-title">
+        <h1>Admin Dashboard</h1>
+        <p>Upload student rosters and session recordings to generate and send personalised summaries</p>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="a-tabs">
+        <button class="a-tab active" id="atab-upload"    onclick="switchAdminTab('upload')">Upload &amp; Generate</button>
+        <button class="a-tab"        id="atab-summaries" onclick="switchAdminTab('summaries')">Student Summaries</button>
+      </div>
+
+      <!-- ── PANEL: Upload & Generate ── -->
+      <div id="apanel-upload">
+        <div class="steps">
+          <div class="step"><div class="step-n">Step 1</div><h3>Upload Roster</h3><p>Import student details via .csv or .xlsx</p></div>
+          <div class="step"><div class="step-n">Step 2</div><h3>Add Recording</h3><p>Upload a Zoom transcript or recording file</p></div>
+          <div class="step"><div class="step-n">Step 3</div><h3>Send Summaries</h3><p>AI personalises and emails each student</p></div>
+        </div>
+
+        <!-- API Key -->
+        <div class="card">
+          <div class="card-hd">Anthropic API Key</div>
+          <div class="api-warn">⚠ Stored in your browser session only — never transmitted externally.</div>
+          <div class="key-row">
+            <input type="password" id="api-key-input" placeholder="sk-ant-api03-…"/>
+            <button class="btn-primary" onclick="saveApiKey()">Save</button>
+          </div>
+          <div class="key-status" id="api-key-status"></div>
+        </div>
+
+        <!-- CSV / XLSX -->
+        <div class="card">
+          <div class="card-hd">Student Roster (.csv or .xlsx)</div>
+          <p style="font-size:13px;color:var(--ti-gray-400);margin-bottom:.875rem">Required column: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">email</code> — also reads: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">name, education, profession, sop</code></p>
+          <div class="upload-zone" id="csv-zone" onclick="document.getElementById('csv-input').click()"
+               ondragover="onDrag(event,'csv-zone')" ondragleave="offDrag('csv-zone')" ondrop="onDrop(event,'csv')">
+            <span class="uz-icon">📋</span>
+            <h4>Drop file here or click to browse</h4>
+            <p>.csv or .xlsx supported</p>
+            <input type="file" id="csv-input" accept=".csv,.xlsx,.xls" onchange="parseFile(event)"/>
+          </div>
+          <div id="csv-status"></div>
+          <div id="student-table-wrap" style="display:none">
+            <div class="table-wrap">
+              <table class="dt">
+                <thead><tr><th>Name</th><th>Email</th><th>Education</th><th>Profession</th><th>Status</th></tr></thead>
+                <tbody id="student-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recording -->
+        <div class="card">
+          <div class="card-hd">Zoom Recording / Transcript</div>
+          <div class="upload-zone" id="rec-zone" onclick="document.getElementById('rec-input').click()"
+               ondragover="onDrag(event,'rec-zone')" ondragleave="offDrag('rec-zone')" ondrop="onDrop(event,'rec')">
+            <span class="uz-icon">🎬</span>
+            <h4>Drop transcript or recording</h4>
+            <p>.vtt .txt .srt give best results &mdash; .mp4 .m4a also accepted</p>
+            <input type="file" id="rec-input" accept=".txt,.vtt,.srt,.mp4,.m4a,.pdf" onchange="loadRec(event)"/>
+          </div>
+          <div id="rec-status"></div>
+          <div style="margin-top:1rem">
+            <div class="card-hd" style="margin-bottom:.5rem;font-size:11px">Or paste transcript text</div>
+            <textarea id="paste-transcript" rows="4" style="width:100%;border:var(--border);border-radius:var(--r-sm);padding:10px;font:400 13px/1.5 var(--font);background:var(--ti-white);resize:vertical;outline:none" placeholder="Paste Zoom auto-transcript, speaker notes, or slide content here…"></textarea>
+          </div>
+          <div class="field" style="margin-top:.875rem;margin-bottom:0">
+            <label>Session title</label>
+            <input type="text" id="session-title" placeholder="e.g. Week 3 — Regulatory Economics"/>
+          </div>
+        </div>
+
+        <!-- Generate -->
+        <div class="card">
+          <div class="card-hd">Generate &amp; Send</div>
+          <p style="font-size:13px;color:var(--ti-gray-500);margin-bottom:1rem">Each student receives a tailored summary drawing on examples from their own profession and background.</p>
+          <button class="btn-primary" id="send-btn" onclick="generateAndSend()" disabled>
+            <span id="send-label">Send Personalised Summaries</span>
+          </button>
+          <div id="gen-progress" style="display:none;margin-top:1rem">
+            <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+            <p style="font-size:12px;color:var(--ti-gray-400);margin-top:5px" id="prog-text"></p>
+            <div class="log" id="gen-log"></div>
+          </div>
+        </div>
+      </div><!-- /apanel-upload -->
+
+      <!-- ── PANEL: Student Summaries ── -->
+      <div id="apanel-summaries" style="display:none">
+        <div class="stat-row">
+          <div class="stat-box"><div class="num" id="stat-students">0</div><div class="lbl">Students</div></div>
+          <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Summaries</div></div>
+          <div class="stat-box"><div class="num" id="stat-reached">0</div><div class="lbl">Reached</div></div>
+          <div class="stat-box"><div class="num" id="stat-pending">0</div><div class="lbl">Pending</div></div>
+        </div>
+        <div class="search-row">
+          <input type="text" id="admin-search" placeholder="Search by name, email or profession…" oninput="renderAdminSummaries()"/>
+          <select id="admin-filter" onchange="renderAdminSummaries()">
+            <option value="all">All students</option>
+            <option value="with">Has summaries</option>
+            <option value="without">No summaries yet</option>
+          </select>
+        </div>
+        <div id="admin-sum-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="ti-footer">
+    <p>© 2010–2024 The Takshashila Institution. All rights reserved.</p>
+    <p>2nd floor, 46/1, Cobalt Building, Church Street, Bengaluru 560001</p>
+  </footer>
+</div><!-- /page-admin -->
+
+
+<!-- ══════════════════════════════════════════
+     PAGE: STUDENT
+══════════════════════════════════════════ -->
+<div class="page" id="page-student">
+  <nav class="ti-nav">
+    <div style="display:flex;align-items:center">
+      <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto">
+        <text x="0" y="26" font-family="Inter,sans-serif" font-weight="700" font-size="18" fill="#111111">Takshashila</text>
+        <rect x="0" y="31" width="112" height="2" fill="#E8212A" rx="1"/>
+      </svg>
+      <span class="ti-nav-meta">Learning Portal</span>
+    </div>
+    <div class="ti-nav-right">
+      <span class="ti-nav-user">Signed in as <strong id="s-nav-name"></strong></span>
+      <button class="ti-nav-signout" onclick="logout()">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <div class="page-body narrow">
+
+      <!-- Hero -->
+      <div class="s-hero">
+        <div class="s-hero-left">
+          <h2 id="s-hero-name">Welcome!</h2>
+          <p  id="s-hero-email"></p>
+        </div>
+        <span class="s-hero-badge">Policy School</span>
+      </div>
+
+      <!-- Profile editor -->
+      <div class="card">
+        <div class="card-hd">Your Profile <span style="text-transform:none;font-weight:400;font-size:11px;letter-spacing:0;color:var(--ti-gray-400);margin-left:4px">— Edit to improve personalised summaries</span></div>
+        <div class="profile-grid">
+          <div class="field" style="margin:0"><label>Full name</label><input type="text" id="e-name"/></div>
+          <div class="field" style="margin:0"><label>Profession / Role</label><input type="text" id="e-prof"/></div>
+          <div class="field wide" style="margin:0"><label>Education background</label><input type="text" id="e-edu"/></div>
+          <div class="field wide" style="margin:0"><label>Statement of purpose</label><textarea id="e-sop" rows="3"></textarea></div>
+          <div class="field wide" style="margin:0">
+            <label>Additional context <span style="text-transform:none;font-weight:400;font-size:10px">(topics, goals, preferences)</span></label>
+            <textarea id="e-note" rows="2" placeholder="e.g. Preparing for tech policy work. Prefer applied examples over theory."></textarea>
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ti-gray-500);margin-bottom:.4rem">Interests <span style="font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(helps AI pick relevant examples)</span></div>
+          <div class="tag-input-row">
+            <input type="text" id="interest-inp" placeholder="e.g. climate policy, AI regulation, defence…" onkeydown="if(event.key==='Enter')addTag()"/>
+            <button onclick="addTag()">Add</button>
+          </div>
+          <div class="tag-row" id="tag-row"></div>
+        </div>
+        <div style="margin-top:1.25rem;display:flex;align-items:center">
+          <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+          <span class="saved-flash" id="saved-flash">✓ Saved</span>
+        </div>
+      </div>
+
+      <!-- Summaries -->
+      <div class="card">
+        <div class="card-hd">Your Personalised Summaries</div>
+        <div id="sum-container">
+          <div class="empty-state">
+            <span class="icon">📬</span>
+            <p>No summaries yet.<br/>Your instructor will send one after each session.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="ti-footer">
+    <p>© 2010–2024 The Takshashila Institution. All rights reserved.</p>
+    <p>2nd floor, 46/1, Cobalt Building, Church Street, Bengaluru 560001</p>
+  </footer>
+</div><!-- /page-student -->
+
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+/* ── STATE ───────────────────────────────── */
+const ADMIN_PASS = 'admin123';
+let students    = [];
+let summariesDB = {};
+let apiKey      = '';
+let recContent  = '';
+let recName     = '';
+let currentUser = null;
+
+/* ── INIT ────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const s  = localStorage.getItem('ls_students');  if (s)  students    = JSON.parse(s);
+    const sm = localStorage.getItem('ls_summaries'); if (sm) summariesDB = JSON.parse(sm);
+    const ak = localStorage.getItem('ls_apikey');
+    if (ak) {
+      apiKey = ak;
+      document.getElementById('api-key-input').value   = ak;
+      document.getElementById('api-key-status').textContent = '✓ API key loaded';
+    }
+  } catch(e) {}
+  checkReady();
+  if (students.length) renderAdminTable();
+});
+
+function saveState() {
+  try {
+    localStorage.setItem('ls_students',  JSON.stringify(students));
+    localStorage.setItem('ls_summaries', JSON.stringify(summariesDB));
+  } catch(e) {}
+}
+
+/* ── ROUTING ─────────────────────────────── */
+function goto(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── AUTH ────────────────────────────────── */
+function switchTab(t) {
+  document.getElementById('tab-student').classList.toggle('active', t === 'student');
+  document.getElementById('tab-admin'  ).classList.toggle('active', t === 'admin');
+  document.getElementById('form-student').style.display = t === 'student' ? 'block' : 'none';
+  document.getElementById('form-admin'  ).style.display = t === 'admin'   ? 'block' : 'none';
+}
+
+function studentLogin() {
+  const email   = document.getElementById('sl-email').value.trim().toLowerCase();
+  const pass    = document.getElementById('sl-pass' ).value.trim();
+  const student = students.find(s => s.email.toLowerCase() === email);
+  if (!student) { showErr('sl-err', 'No account found for this email. Contact your instructor.'); return; }
+  if (pass !== email.split('@')[0]) { showErr('sl-err', 'Incorrect password. Use the part of your email before @'); return; }
+  currentUser = { ...student, email: email, role: 'student' };  // email is already lowercased
+  document.getElementById('s-nav-name').textContent = student.name || email;
+  // Re-read summariesDB from localStorage to pick up any new summaries
+  try {
+    const sm = localStorage.getItem('ls_summaries');
+    if (sm) summariesDB = JSON.parse(sm);
+  } catch(e) {}
+  renderStudentPage();
+  goto('page-student');
+}
+
+function adminLogin() {
+  const pass = document.getElementById('al-pass').value;
+  if (pass !== ADMIN_PASS) { showErr('al-err', 'Incorrect admin password'); return; }
+  currentUser = { role: 'admin' };
+  goto('page-admin');
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('sl-email').value = '';
+  document.getElementById('sl-pass' ).value = '';
+  document.getElementById('al-pass' ).value = '';
+  goto('page-login');
+}
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5000);
+}
+
+/* ── ADMIN TABS ──────────────────────────── */
+function switchAdminTab(t) {
+  document.getElementById('atab-upload'   ).classList.toggle('active', t === 'upload');
+  document.getElementById('atab-summaries').classList.toggle('active', t === 'summaries');
+  document.getElementById('apanel-upload'   ).style.display = t === 'upload'    ? 'block' : 'none';
+  document.getElementById('apanel-summaries').style.display = t === 'summaries' ? 'block' : 'none';
+  if (t === 'summaries') renderAdminSummaries();
+}
+
+/* ── API KEY ─────────────────────────────── */
+function saveApiKey() {
+  apiKey = document.getElementById('api-key-input').value.trim();
+  localStorage.setItem('ls_apikey', apiKey);
+  document.getElementById('api-key-status').textContent = apiKey ? '✓ Key saved for this session' : 'Cleared.';
+  checkReady();
+}
+
+/* ── CSV / XLSX ──────────────────────────── */
+function onDrag(e, id) { e.preventDefault(); document.getElementById(id).classList.add('over'); }
+function offDrag(id)   { document.getElementById(id).classList.remove('over'); }
+function onDrop(e, type) {
+  e.preventDefault(); offDrag(type === 'csv' ? 'csv-zone' : 'rec-zone');
+  const f = e.dataTransfer.files[0]; if (f) { type === 'csv' ? handleFile(f) : handleRec(f); }
+}
+function parseFile(ev) { handleFile(ev.target.files[0]); }
+
+function handleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    let rows = [];
+    try {
+      if (file.name.match(/\.csv$/i)) {
+        rows = e.target.result.trim().split('\n').map(r => r.split(',').map(c => c.trim().replace(/^"|"$/g, '')));
+      } else {
+        const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+        rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+      }
+      processRows(rows);
+    } catch { alert('Could not parse file. Ensure it is a valid .csv or .xlsx.'); }
+  };
+  file.name.match(/\.csv$/i) ? reader.readAsText(file) : reader.readAsArrayBuffer(file);
+}
+
+function processRows(rows) {
+  if (rows.length < 2) { alert('File needs a header row and at least one student.'); return; }
+  const hdr = rows[0].map(h => (h || '').toString().toLowerCase().trim());
+  const gi  = (...ns) => { for (const n of ns) { const i = hdr.indexOf(n); if (i > -1) return i; } return -1; };
+  const ei  = gi('email');
+  if (ei < 0) { alert('File must have an "email" column.'); return; }
+  const ni  = gi('name', 'full name', 'fullname');
+  const edi = gi('education', 'edu', 'degree');
+  const pi  = gi('profession', 'job', 'role', 'occupation', 'title');
+  const si  = gi('sop', 'statement of purpose', 'statement', 'bio');
+  const out = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const em = (r[ei] || '').toString().trim();
+    if (!em) continue;
+    const existing = students.find(s => s.email.toLowerCase() === em.toLowerCase());
+    out.push(existing || {
+      email:      em,
+      name:       ni  > -1 ? (r[ni]  || '').toString().trim() : '',
+      education:  edi > -1 ? (r[edi] || '').toString().trim() : '',
+      profession: pi  > -1 ? (r[pi]  || '').toString().trim() : '',
+      sop:        si  > -1 ? (r[si]  || '').toString().trim() : '',
+      interests:  [],
+    });
+  }
+  students = out;
+  saveState();
+  renderAdminTable();
+  document.getElementById('csv-status').innerHTML = `<div class="chip-ok">✓ ${students.length} students loaded</div>`;
+  checkReady();
+}
+
+function renderAdminTable() {
+  document.getElementById('student-tbody').innerHTML = students.map(s => `<tr>
+    <td style="font-weight:500;color:var(--ti-black)">${s.name || '—'}</td>
+    <td><a href="mailto:${s.email}" style="color:var(--ti-red);text-decoration:none">${s.email}</a></td>
+    <td>${s.education  || '—'}</td>
+    <td>${s.profession || '—'}</td>
+    <td><span class="st-dot ${(summariesDB[s.email] || []).length ? 'dot-sent' : 'dot-pending'}"></span>${(summariesDB[s.email] || []).length ? 'Sent' : 'Pending'}</td>
+  </tr>`).join('');
+  document.getElementById('student-table-wrap').style.display = students.length ? 'block' : 'none';
+  checkReady();
+}
+
+/* ── RECORDING ───────────────────────────── */
+function loadRec(ev) { handleRec(ev.target.files[0]); }
+function handleRec(file) {
+  if (!file) return;
+  recName = file.name;
+  if (file.name.match(/\.(txt|vtt|srt)$/i)) {
+    const r = new FileReader();
+    r.onload = e => {
+      recContent = e.target.result.substring(0, 10000);
+      document.getElementById('rec-status').innerHTML = `<div class="chip-ok">✓ ${file.name} loaded (${(file.size / 1024).toFixed(1)} KB)</div>`;
+      checkReady();
+    };
+    r.readAsText(file);
+  } else {
+    recContent = `[File: ${file.name} — for best results upload a .vtt or .txt transcript]`;
+    document.getElementById('rec-status').innerHTML =
+      `<div class="chip-ok">✓ ${file.name} noted</div>` +
+      `<div class="chip-warn">⚠ Upload .vtt or .txt for accurate summaries</div>`;
+    checkReady();
+  }
+}
+
+function checkReady() {
+  document.getElementById('send-btn').disabled = !(students.length && apiKey);
+}
+
+/* callClaude inlined into generateAndSend */
+
+function buildPrompt(student, transcript) {
+  const interests = (student.interests || []).length ? student.interests.join(', ') : 'not specified';
+  return `You are an expert educator at the Takshashila Institution, India's leading public policy school. Create a personalised learning summary.
+
+STUDENT PROFILE:
+- Name: ${student.name || 'Student'}
+- Education: ${student.education || 'Not specified'}
+- Profession: ${student.profession || 'Not specified'}
+- Statement of Purpose: ${student.sop || 'Not specified'}
+- Interests: ${interests}
+- Additional context: ${student.customNote || 'None'}
+
+SESSION TRANSCRIPT/CONTENT:
+${transcript}
+
+TASK: Write a rich, personalised learning summary tailored specifically to ${student.name || 'this student'}.
+
+Requirements:
+1. Warm, professional greeting using their name
+2. 3–4 clearly titled sections covering the key concepts from the session
+3. For EACH concept, include a concrete analogy or example drawn from their profession (${student.profession}) or interests — not generic examples
+4. Match vocabulary and depth to their background
+5. End with 2–3 specific next steps aligned to their stated purpose
+6. Use ## for section headers and **bold** for key terms
+7. Keep under 450 words — dense and useful, not padded
+
+Make every example feel genuinely drawn from their world.`;
+}
+
+async function generateAndSend() {
+  const transcript = recContent || document.getElementById('paste-transcript').value.trim();
+
+  const log  = document.getElementById('gen-log');
+  const fill = document.getElementById('prog-fill');
+  const ptxt = document.getElementById('prog-text');
+  const btn  = document.getElementById('send-btn');
+
+  document.getElementById('gen-progress').style.display = 'block';
+  log.innerHTML = '';
+  fill.style.width = '0%';
+
+  const addLog = (msg, cls = 'inf') => {
+    log.innerHTML += `<span class="${cls}">${ts()} ${msg}\n</span>`;
+    log.scrollTop = log.scrollHeight;
+  };
+
+  // ── Pre-flight checks ──────────────────────────────────────
+  addLog('Running pre-flight checks…');
+
+  if (!apiKey) {
+    addLog('✗ No API key. Enter your Anthropic key above and click Save.', 'er');
+    return;
+  }
+  if (!apiKey.startsWith('sk-ant-')) {
+    addLog(`✗ API key looks wrong — starts with "${apiKey.substring(0,10)}…" but should start with "sk-ant-"`, 'er');
+    return;
+  }
+  if (!students.length) {
+    addLog('✗ No students loaded. Upload a CSV/XLSX file first.', 'er');
+    return;
+  }
+  if (!transcript) {
+    addLog('✗ No transcript. Upload a .vtt/.txt file or paste text into the transcript box.', 'er');
+    return;
+  }
+
+  addLog(`✓ API key present (${apiKey.substring(0,14)}…)`, 'ok');
+  addLog(`✓ ${students.length} student(s) loaded`, 'ok');
+  addLog(`✓ Transcript ready (${transcript.length} chars)`, 'ok');
+
+  // ── Quick API connectivity test ────────────────────────────
+  addLog('Testing API connection…');
+  btn.disabled = true;
+  document.getElementById('send-label').innerHTML = '<span class="spinner"></span> Processing…';
+
+  try {
+    const testRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: 'Hi' }],
+      }),
+    });
+    if (!testRes.ok) {
+      const errBody = await testRes.json().catch(() => ({}));
+      const msg = errBody?.error?.message || `HTTP ${testRes.status}`;
+      addLog(`✗ API test failed: ${msg}`, 'er');
+      if (testRes.status === 401) addLog('  → Your API key is invalid or expired. Get a new one at console.anthropic.com', 'er');
+      if (testRes.status === 403) addLog('  → API key does not have permission for this model.', 'er');
+      if (testRes.status === 429) addLog('  → Rate limit hit. Wait a moment and try again.', 'er');
+      btn.disabled = false;
+      document.getElementById('send-label').textContent = 'Send Personalised Summaries';
+      return;
+    }
+    addLog('✓ API connection successful', 'ok');
+  } catch (networkErr) {
+    addLog(`✗ Network error: ${networkErr.message}`, 'er');
+    addLog('  → Check your internet connection. CORS must be allowed for api.anthropic.com', 'er');
+    btn.disabled = false;
+    document.getElementById('send-label').textContent = 'Send Personalised Summaries';
+    return;
+  }
+
+  // ── Generate summaries ─────────────────────────────────────
+  addLog(`Generating summaries for ${students.length} student(s)…`);
+  let successCount = 0;
+
+  for (let i = 0; i < students.length; i++) {
+    const student = students[i];
+    const emailKey = student.email.toLowerCase();
+    addLog(`[${i+1}/${students.length}] Generating for ${emailKey}…`);
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1200,
+          messages: [{ role: 'user', content: buildPrompt(student, transcript) }],
+        }),
+      });
+
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+        throw new Error(errBody?.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data    = await res.json();
+      const summary = data?.content?.[0]?.text;
+
+      if (!summary) {
+        throw new Error('API returned empty content. Response: ' + JSON.stringify(data).substring(0, 200));
+      }
+
+      // Store the summary
+      if (!summariesDB[emailKey]) summariesDB[emailKey] = [];
+      summariesDB[emailKey].push({
+        id:      String(Date.now()) + String(Math.floor(Math.random() * 10000)),
+        title:   document.getElementById('session-title').value.trim() || recName || 'Session Summary',
+        date:    new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+        content: summary,
+      });
+
+      saveState();  // save after every student so partial results are never lost
+      addLog(`✓ Stored for ${emailKey} (${summariesDB[emailKey].length} total)`, 'ok');
+      successCount++;
+
+    } catch (err) {
+      addLog(`✗ Failed for ${emailKey}: ${err.message}`, 'er');
+    }
+
+    fill.style.width = Math.round(((i + 1) / students.length) * 100) + '%';
+    ptxt.textContent = `${i + 1} / ${students.length} processed`;
+  }
+
+  // ── Finish ─────────────────────────────────────────────────
+  renderAdminTable();
+
+  if (successCount > 0) {
+    addLog(`✓ Done — ${successCount}/${students.length} summaries generated successfully.`, 'ok');
+    switchAdminTab('summaries');
+    setTimeout(() => {
+      document.querySelectorAll('.ssb-body').forEach(body => {
+        if (body.querySelector('.ssb-item')) {
+          body.classList.add('open');
+          const chev = document.getElementById('chev-' + body.id.replace('ssbbody-', ''));
+          if (chev) chev.classList.add('open');
+        }
+      });
+    }, 100);
+  } else {
+    addLog('✗ No summaries were generated. See errors above.', 'er');
+  }
+
+  if (currentUser && currentUser.role === 'student' &&
+      document.getElementById('page-student').classList.contains('active')) {
+    renderSummaries();
+  }
+
+  document.getElementById('send-label').textContent = successCount > 0 ? '✓ Done' : 'Try Again';
+  setTimeout(() => {
+    btn.disabled = false;
+    document.getElementById('send-label').textContent = 'Send Personalised Summaries';
+  }, 3000);
+}
+
+/* ── ADMIN SUMMARIES ─────────────────────── */
+function renderAdminSummaries() {
+  const q   = (document.getElementById('admin-search').value || '').toLowerCase();
+  const flt = document.getElementById('admin-filter').value;
+
+  const totalSums = Object.values(summariesDB).reduce((a, b) => a + b.length, 0);
+  const withSums  = Object.keys(summariesDB).filter(e => (summariesDB[e] || []).length > 0).length;
+  document.getElementById('stat-students').textContent = students.length;
+  document.getElementById('stat-total'   ).textContent = totalSums;
+  document.getElementById('stat-reached' ).textContent = withSums;
+  document.getElementById('stat-pending' ).textContent = students.length - withSums;
+
+  let list = students.filter(s => {
+    const has = (summariesDB[s.email.toLowerCase()] || []).length > 0;
+    if (flt === 'with'    && !has) return false;
+    if (flt === 'without' &&  has) return false;
+    if (q) {
+      const hay = `${s.name} ${s.email} ${s.profession} ${s.education}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const el = document.getElementById('admin-sum-list');
+  if (!students.length) { el.innerHTML = '<div class="no-results">No students loaded yet. Upload a roster first.</div>'; return; }
+  if (!list.length)     { el.innerHTML = '<div class="no-results">No students match your search.</div>'; return; }
+
+  el.innerHTML = list.map(s => {
+    const sums    = summariesDB[s.email] || [];
+    const initials= (s.name || s.email).split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+    const safeId  = s.email.replace(/[@.]/g, '-');
+    const items   = sums.length
+      ? [...sums].reverse().map(sm => `
+          <div class="ssb-item">
+            <div class="ssb-item-hd">
+              <span class="ssb-item-title">${esc(sm.title || 'Session Summary')}</span>
+              <span class="ssb-item-date">${sm.date}</span>
+            </div>
+            <div class="ssb-item-body">${fmtMd(sm.content)}</div>
+            <div style="margin-top:.875rem;padding-top:.875rem;border-top:var(--border)">
+              <button class="btn-sm" onclick="dlSummary('${sm.id}','${esc(sm.title||'summary')}','${s.email}')">📥 Download .txt</button>
+            </div>
+          </div>`).join('')
+      : '<div class="ssb-empty">No summaries sent yet for this student.</div>';
+
+    return `
+      <div class="ssb" id="ssb-${safeId}">
+        <div class="ssb-head" onclick="toggleSsb('${safeId}')">
+          <div class="ssb-hl">
+            <div class="ssb-av">${initials}</div>
+            <div>
+              <div class="ssb-name">${s.name || '—'}</div>
+              <div class="ssb-meta">${s.email}${s.profession ? ' · ' + s.profession : ''}</div>
+            </div>
+          </div>
+          <div class="ssb-hr">
+            <span class="ssb-badge ${sums.length ? '' : 'zero'}">${sums.length ? sums.length + ' summar' + (sums.length > 1 ? 'ies' : 'y') : 'No summaries'}</span>
+            <span class="ssb-chev" id="chev-${safeId}">▼</span>
+          </div>
+        </div>
+        <div class="ssb-body" id="ssbbody-${safeId}">${items}</div>
+      </div>`;
+  }).join('');
+}
+
+function toggleSsb(id) {
+  document.getElementById(`ssbbody-${id}`).classList.toggle('open');
+  document.getElementById(`chev-${id}`   ).classList.toggle('open');
+}
+
+function dlSummary(id, title, email) {
+  const sm = (summariesDB[(email || '').toLowerCase()] || []).find(s => s.id === id);
+  if (!sm) return;
+  const a   = document.createElement('a');
+  a.href    = URL.createObjectURL(new Blob([sm.content], { type: 'text/plain' }));
+  a.download = `${email.split('@')[0]}_${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+  a.click();
+}
+
+/* ── STUDENT PAGE ────────────────────────── */
+function renderStudentPage() {
+  const s = currentUser;
+  document.getElementById('s-hero-name' ).textContent = `Welcome, ${s.name || 'Student'}`;
+  document.getElementById('s-hero-email').textContent = s.email || '';
+  document.getElementById('e-name').value = s.name       || '';
+  document.getElementById('e-prof').value = s.profession || '';
+  document.getElementById('e-edu' ).value = s.education  || '';
+  document.getElementById('e-sop' ).value = s.sop        || '';
+  document.getElementById('e-note').value = s.customNote || '';
+  renderTags();
+  renderSummaries();
+}
+
+function renderTags() {
+  document.getElementById('tag-row').innerHTML = (currentUser.interests || [])
+    .map((t, i) => `<div class="tag">${t}<button onclick="removeTag(${i})">×</button></div>`).join('');
+}
+function addTag() {
+  const inp = document.getElementById('interest-inp');
+  const v   = inp.value.trim(); if (!v) return;
+  if (!currentUser.interests) currentUser.interests = [];
+  currentUser.interests.push(v); inp.value = ''; renderTags();
+}
+function removeTag(i) { currentUser.interests.splice(i, 1); renderTags(); }
+
+function saveProfile() {
+  currentUser.name       = document.getElementById('e-name').value.trim();
+  currentUser.profession = document.getElementById('e-prof').value.trim();
+  currentUser.education  = document.getElementById('e-edu' ).value.trim();
+  currentUser.sop        = document.getElementById('e-sop' ).value.trim();
+  currentUser.customNote = document.getElementById('e-note').value.trim();
+  const idx = students.findIndex(s => s.email === currentUser.email);
+  if (idx > -1) { students[idx] = { ...students[idx], ...currentUser }; saveState(); }
+  document.getElementById('s-hero-name').textContent  = `Welcome, ${currentUser.name || 'Student'}`;
+  document.getElementById('s-nav-name').textContent   = currentUser.name || currentUser.email;
+  const fl = document.getElementById('saved-flash'); fl.style.display = 'inline';
+  setTimeout(() => fl.style.display = 'none', 2500);
+}
+
+function renderSummaries() {
+  const container = document.getElementById('sum-container');
+  const sums      = summariesDB[(currentUser.email || '').toLowerCase()] || [];
+  if (!sums.length) {
+    container.innerHTML = `<div class="empty-state"><span class="icon">📬</span><p>No summaries yet.<br/>Your instructor will send one after each session.</p></div>`;
+    return;
+  }
+  container.innerHTML = `<div class="sum-list">${[...sums].reverse().map(s => `
+    <div class="sum-card">
+      <div class="sum-card-top">
+        <div class="sum-card-title">${esc(s.title || 'Session Summary')}</div>
+        <span class="sum-card-date">${s.date}</span>
+      </div>
+      <div class="sum-card-body" id="sc-${s.id}">${fmtMd(s.content)}</div>
+      <div class="sum-card-foot">
+        <button class="btn-sm" onclick="saveSess('${s.id}')">💾 Save to session</button>
+        <button class="btn-sm" onclick="dlStudentSummary('${s.id}','${esc(s.title||'summary')}')">📥 Download .txt</button>
+        <span class="action-flash" id="af-${s.id}">✓ Saved to session</span>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function saveSess(id) {
+  const el = document.getElementById(`sc-${id}`);
+  sessionStorage.setItem(`sum_${id}`, el.innerText);
+  const af = document.getElementById(`af-${id}`); af.style.display = 'inline';
+  setTimeout(() => af.style.display = 'none', 2500);
+}
+
+function dlStudentSummary(id, title) {
+  const sm = (summariesDB[(currentUser.email || '').toLowerCase()] || []).find(s => s.id === id);
+  if (!sm) return;
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(new Blob([sm.content], { type: 'text/plain' }));
+  a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`;
+  a.click();
+}
+
+/* ── UTILS ───────────────────────────────── */
+function fmtMd(txt) {
+  return (txt || '')
+    .replace(/&/g,  '&amp;' ).replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^# (.+)$/gm,  '<h3>$1</h3>')
+    .replace(/\n\n/g, '</p><p style="margin:.5em 0">')
+    .replace(/\n/g,   '<br/>');
+}
+function esc(s) {
+  return (s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/'/g, '&#39;');
+}
+function ts() { return new Date().toLocaleTimeString(); }
+</script>
+</body>
+</html>
