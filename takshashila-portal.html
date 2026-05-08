@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Learning Portal — The Takshashila Institution</title>
+<title>Admin Portal — The Takshashila Institution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -42,7 +42,6 @@ body { font-family: var(--font); background: var(--ti-white); color: var(--ti-bl
 .ti-nav-signout:hover { color: var(--ti-red); border-color: var(--ti-red); }
 .page-shell { flex: 1; overflow-y: auto; }
 .page-body  { max-width: 1040px; margin: 0 auto; padding: 3rem 2rem; }
-.page-body.narrow { max-width: 840px; }
 .pg-title { margin-bottom: 2.5rem; }
 .pg-title h1 { font-size: 1.625rem; font-weight: 700; color: var(--ti-black); letter-spacing: -.3px; }
 .pg-title p { margin-top: .375rem; font-size: 14px; color: var(--ti-gray-500); }
@@ -129,34 +128,6 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
 .ssb-item-body h3 { font-size: 13px; font-weight: 700; color: var(--ti-red); margin: .9em 0 .3em; text-transform: uppercase; letter-spacing: .5px; }
 .ssb-empty { font-size: 13px; color: var(--ti-gray-400); text-align: center; padding: 1.5rem; }
 .no-results { text-align: center; padding: 3rem 1rem; font-size: 14px; color: var(--ti-gray-400); }
-.s-hero { border-top: 4px solid var(--ti-red); background: var(--ti-gray-100); border: var(--border); border-radius: var(--r); padding: 2rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-.s-hero-left h2 { font-size: 1.375rem; font-weight: 700; color: var(--ti-black); }
-.s-hero-left p  { font-size: 13px; color: var(--ti-gray-400); margin-top: 3px; }
-.s-hero-badge { font-size: 11px; font-weight: 700; color: var(--ti-red); border: 1px solid var(--ti-red); padding: 4px 12px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
-.profile-grid { display: grid; grid-template-columns: 1fr; gap: .875rem; margin-bottom: 1.5rem;}
-.tag-input-row { display: flex; gap: 8px; margin-bottom: .5rem; }
-.tag-input-row input { flex: 1; border: var(--border); border-radius: var(--r-sm); padding: 8px 12px; font: 400 13px/1 var(--font); background: var(--ti-white); color: var(--ti-black); outline: none; }
-.tag-input-row input:focus { border-color: var(--ti-red); }
-.tag-input-row button { background: var(--ti-red); color: var(--ti-white); border: none; padding: 8px 14px; border-radius: var(--r-sm); font: 500 13px/1 var(--font); cursor: pointer; transition: background .15s; }
-.tag-input-row button:hover { background: var(--ti-red-dk); }
-.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { background: var(--ti-gray-100); border: var(--border); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: var(--ti-gray-700); display: flex; align-items: center; gap: 6px; }
-.tag button { background: none; border: none; cursor: pointer; color: var(--ti-gray-400); font-size: 14px; padding: 0; line-height: 1; }
-.tag button:hover { color: var(--ti-red); }
-.saved-flash { font-size: 13px; color: #065F46; display: none; margin-left: 8px; }
-.sum-list { display: flex; flex-direction: column; gap: 1rem; }
-.sum-card { border: var(--border); border-radius: var(--r); overflow: hidden; }
-.sum-card-top { display: flex; justify-content: space-between; align-items: flex-start; padding: 1rem 1.25rem; border-bottom: var(--border); background: var(--ti-gray-50); }
-.sum-card-title { font-size: 15px; font-weight: 700; color: var(--ti-black); }
-.sum-card-date  { font-size: 12px; color: var(--ti-gray-400); white-space: nowrap; margin-left: 1rem; flex-shrink: 0; }
-.sum-card-body  { padding: 1.25rem; font-size: 14px; line-height: 1.8; color: var(--ti-gray-700); }
-.sum-card-body strong { color: var(--ti-black); font-weight: 600; }
-.sum-card-body h3 { font-size: 13px; font-weight: 700; color: var(--ti-red); margin: 1em 0 .35em; text-transform: uppercase; letter-spacing: .5px; }
-.sum-card-foot { padding: .75rem 1.25rem; border-top: var(--border); background: var(--ti-gray-50); display: flex; gap: 8px; align-items: center; }
-.action-flash { font-size: 12px; color: #065F46; display: none; margin-left: 4px; }
-.empty-state { text-align: center; padding: 4rem 1rem; }
-.empty-state .icon { font-size: 2.25rem; display: block; margin-bottom: .75rem; opacity: .4; }
-.empty-state p { font-size: 14px; color: var(--ti-gray-400); line-height: 1.7; }
 .ti-footer { background: var(--ti-dark); border-top: 3px solid var(--ti-red); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 1rem; }
 .ti-footer p { font-size: 12px; color: rgba(255,255,255,.4); }
 .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
@@ -175,16 +146,27 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
 .login-card { width: 100%; max-width: 360px; }
 .login-card h2 { font-size: 1.25rem; font-weight: 700; color: var(--ti-black); margin-bottom: .25rem; }
 .login-card .sub { font-size: 14px; color: var(--ti-gray-400); margin-bottom: 2rem; }
-.tab-row { display: flex; border: var(--border); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 1.75rem; }
-.tab-btn { flex: 1; padding: 9px 12px; border: none; background: none; font: 500 13px/1 var(--font); cursor: pointer; color: var(--ti-gray-500); transition: background .15s, color .15s; }
-.tab-btn.active { background: var(--ti-red); color: var(--ti-white); }
-.tab-btn:hover:not(.active) { background: var(--ti-gray-100); color: var(--ti-black); }
-.login-hint { font-size: 12px; color: var(--ti-gray-400); text-align: center; margin-top: .75rem; }
-.login-hint code { background: var(--ti-gray-100); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--ti-gray-700); }
+
+/* ─── DATABASE MANAGER ──────────────────────────────────── */
+.db-manager { margin-bottom: 1.5rem; }
+.db-selector-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.db-select { flex: 1; min-width: 180px; border: 2px solid var(--ti-red); border-radius: var(--r-sm); padding: 10px 12px; font: 600 14px/1 var(--font); background: var(--ti-white); color: var(--ti-black); outline: none; cursor: pointer; }
+.db-select:focus { box-shadow: 0 0 0 3px rgba(98,13,60,.15); }
+.db-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--ti-red); background: rgba(98,13,60,.07); border: 1px solid rgba(98,13,60,.2); padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+.db-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: .875rem; padding-top: .875rem; border-top: var(--border); }
+.btn-db { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--font); padding: 7px 14px; border-radius: var(--r-sm); cursor: pointer; transition: .15s; border: var(--border); background: var(--ti-white); color: var(--ti-gray-700); }
+.btn-db:hover { background: var(--ti-gray-100); }
+.btn-db.danger:hover { background: #fdf0f0; color: var(--ti-red); border-color: var(--ti-red); }
+.db-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 500; align-items: center; justify-content: center; }
+.db-modal-overlay.open { display: flex; }
+.db-modal { background: var(--ti-white); border-radius: var(--r); padding: 2rem; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.db-modal h3 { font-size: 1rem; font-weight: 700; color: var(--ti-black); margin-bottom: .25rem; }
+.db-modal p { font-size: 13px; color: var(--ti-gray-500); margin-bottom: 1.25rem; }
+.db-modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+
 @media (max-width: 720px) {
   .login-wrap { grid-template-columns: 1fr; }
   .login-left { display: none; }
-  .s-hero { flex-direction: column; }
 }
 </style>
 </head>
@@ -201,31 +183,20 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
         </svg>
       </div>
       <div class="ll-body">
-        <p class="ll-eyebrow">Learning Portal</p>
+        <p class="ll-eyebrow">Learning Portal Admin</p>
         <h1 class="ll-headline">Personalised<br/>summaries for<br/>every <em>student.</em></h1>
-        <p class="ll-body-text">AI-powered session summaries tailored to your sectors and areas of interest — delivered to your inbox after every class.</p>
+        <p class="ll-body-text">AI-powered session summaries tailored via individual student .md files — delivered to their inbox after every class.</p>
       </div>
       <p class="ll-tagline">Freedom · Openness · Responsible Citizenship</p>
     </div>
     <div class="login-right">
       <div class="login-card">
-        <h2>Sign in</h2>
-        <p class="sub">Access your Learning Portal account</p>
-        <div class="tab-row">
-          <button class="tab-btn active" id="tab-student" onclick="switchTab('student')">Student</button>
-          <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')">Admin</button>
-        </div>
-        <div id="form-student">
-          <div class="field"><label>Email address</label><input type="email" id="sl-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')studentLogin()"/></div>
-          <div class="field"><label>Password</label><input type="password" id="sl-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')studentLogin()"/></div>
-          <div class="err-msg" id="sl-err"></div>
-          <button class="btn-primary btn-block" style="margin-top:.625rem" onclick="studentLogin()">Sign in</button>
-          <p class="login-hint">Default password: the part of your email before @</p>
-        </div>
-        <div id="form-admin" style="display:none">
+        <h2>Admin Sign in</h2>
+        <p class="sub">Access your portal to generate summaries</p>
+        <div id="form-admin">
           <div class="field"><label>Admin password</label><input type="password" id="al-pass" placeholder="admin123" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
           <div class="err-msg" id="al-err"></div>
-          <button class="btn-primary btn-block" style="margin-top:.625rem" onclick="adminLogin()">Sign in as Admin</button>
+          <button class="btn-primary btn-block" style="margin-top:.625rem" onclick="adminLogin()">Sign in</button>
           <p class="login-hint">Default: <code>admin123</code></p>
         </div>
       </div>
@@ -251,7 +222,7 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
     <div class="page-body">
       <div class="pg-title">
         <h1>Admin Dashboard</h1>
-        <p>Upload student rosters and session recordings to generate and send personalised summaries</p>
+        <p>Manage student .md profiles, upload session recordings, and dispatch personalised summaries.</p>
       </div>
       <div class="a-tabs">
         <button class="a-tab active" id="atab-upload" onclick="switchAdminTab('upload')">Upload &amp; Generate</button>
@@ -259,9 +230,9 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
       </div>
       <div id="apanel-upload">
         <div class="steps">
-          <div class="step"><div class="step-n">Step 1</div><h3>Upload Roster</h3><p>Import student details via .csv or .xlsx</p></div>
+          <div class="step"><div class="step-n">Step 1</div><h3>Manage Roster</h3><p>Import students &amp; configure their .md files</p></div>
           <div class="step"><div class="step-n">Step 2</div><h3>Add Recordings</h3><p>Upload up to 3 session transcripts</p></div>
-          <div class="step"><div class="step-n">Step 3</div><h3>Send Summaries</h3><p>AI personalises and emails each student</p></div>
+          <div class="step"><div class="step-n">Step 3</div><h3>Send Summaries</h3><p>AI customizes via .md and emails each student</p></div>
         </div>
         <div class="card">
           <div class="card-hd">Anthropic API Key</div>
@@ -273,22 +244,44 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
           <div class="key-status" id="api-key-status"></div>
         </div>
         <div class="card">
-          <div class="card-hd">Student Roster (.csv or .xlsx)</div>
-          <p style="font-size:13px;color:var(--ti-gray-400);margin-bottom:.875rem">Required column: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">email</code> — Optional: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">name</code>, <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">tags</code> (comma-separated sectors, e.g. "climate policy, defence")</p>
-          <div class="upload-zone" id="csv-zone" onclick="document.getElementById('csv-input').click()" ondragover="onDrag(event,'csv-zone')" ondragleave="offDrag('csv-zone')" ondrop="onDrop(event,'csv')">
-            <span class="uz-icon">📋</span>
-            <h4>Drop file here or click to browse</h4>
-            <p>.csv or .xlsx supported</p>
-            <input type="file" id="csv-input" accept=".csv,.xlsx,.xls" onchange="parseFile(event)"/>
-          </div>
-          <div id="csv-status"></div>
-          <div id="student-table-wrap" style="display:none">
-            <div class="table-wrap">
-              <table class="dt">
-                <thead><tr><th>Name</th><th>Email</th><th>Tags / Sectors</th><th>Status</th></tr></thead>
-                <tbody id="student-tbody"></tbody>
-              </table>
+          <div class="card-hd">Student Database</div>
+          <div class="db-manager">
+            <div class="db-selector-row">
+              <select class="db-select" id="db-select" onchange="switchDatabase(this.value)">
+                <option value="">— Select a database —</option>
+              </select>
+              <span class="db-badge" id="db-badge" style="display:none">0 students</span>
             </div>
+            <div class="db-actions">
+              <button class="btn-db" onclick="openDbModal('new')">＋ New Database</button>
+              <button class="btn-db" onclick="openDbModal('rename')" id="btn-db-rename" disabled>✏ Rename</button>
+              <button class="btn-db danger" onclick="openDbModal('delete')" id="btn-db-delete" disabled>🗑 Delete</button>
+            </div>
+          </div>
+          <div id="db-upload-area" style="display:none">
+            <p style="font-size:13px;color:var(--ti-gray-400);margin-bottom:.875rem">
+              Uploading into: <strong id="db-upload-label" style="color:var(--ti-black)"></strong><br/>
+              Required column: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">email</code> — Optional: <code style="background:var(--ti-gray-100);padding:1px 5px;border-radius:3px;font-size:12px">name</code>
+            </p>
+            <div class="upload-zone" id="csv-zone" onclick="document.getElementById('csv-input').click()" ondragover="onDrag(event,'csv-zone')" ondragleave="offDrag('csv-zone')" ondrop="onDrop(event,'csv')">
+              <span class="uz-icon">📋</span>
+              <h4>Drop file here or click to browse</h4>
+              <p>.csv or .xlsx supported</p>
+              <input type="file" id="csv-input" accept=".csv,.xlsx,.xls" onchange="parseFile(event)"/>
+            </div>
+            <div id="csv-status"></div>
+            <div id="student-table-wrap" style="display:none">
+              <div class="table-wrap">
+                <table class="dt">
+                  <thead><tr><th>Name</th><th>Email</th><th>.md Profile Status</th><th>Action</th></tr></thead>
+                  <tbody id="student-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div id="db-no-selection" style="text-align:center;padding:2rem 1rem;color:var(--ti-gray-400)">
+            <div style="font-size:2rem;margin-bottom:.5rem">🗄️</div>
+            <p style="font-size:14px">Create or select a database above to get started</p>
           </div>
         </div>
         <div class="card">
@@ -311,7 +304,10 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
         </div>
         <div class="card">
           <div class="card-hd">Generate &amp; Send</div>
-          <p style="font-size:13px;color:var(--ti-gray-500);margin-bottom:1.25rem">Each student receives a summary tailored to their tags and sectors. Students without tags receive a clear, generic summary.</p>
+          <p style="font-size:13px;color:var(--ti-gray-500);margin-bottom:.75rem">Each student receives a summary deeply tailored based on their individual <code>.md</code> file profile.</p>
+          <div id="gen-target-info" style="display:none;background:var(--ti-gray-100);border:var(--border);border-radius:var(--r-sm);padding:10px 14px;font-size:13px;margin-bottom:1.25rem">
+            Sending to: <strong id="gen-target-label" style="color:var(--ti-red)"></strong> <span id="gen-target-count" style="color:var(--ti-gray-500)"></span>
+          </div>
           <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--ti-black);margin-bottom:1.25rem;padding:1rem;background:var(--ti-gray-100);border:var(--border);border-radius:var(--r);line-height:1.5">
             <input type="checkbox" id="inc-recap" style="width:auto;margin-top:2px;accent-color:var(--ti-red);flex-shrink:0"/>
             <span><strong>Include previous week recap</strong><br/><span style="color:var(--ti-gray-500);font-size:12px">Adds a brief recap of each student's most recent summary to bridge context into this week's content</span></span>
@@ -334,7 +330,7 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
           <div class="stat-box"><div class="num" id="stat-pending">0</div><div class="lbl">Pending</div></div>
         </div>
         <div class="search-row">
-          <input type="text" id="admin-search" placeholder="Search by name, email or tags…" oninput="renderAdminSummaries()"/>
+          <input type="text" id="admin-search" placeholder="Search by name or email…" oninput="renderAdminSummaries()"/>
           <select id="admin-filter" onchange="renderAdminSummaries()">
             <option value="all">All students</option>
             <option value="with">Has summaries</option>
@@ -351,112 +347,91 @@ table.dt tr:hover td { background: var(--ti-gray-50); }
   </footer>
 </div>
 
-<div class="page" id="page-student">
-  <nav class="ti-nav">
-    <div style="display:flex;align-items:center">
-      <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto">
-        <text x="0" y="26" font-family="Inter,sans-serif" font-weight="700" font-size="18" fill="#111111">Takshashila</text>
-        <rect x="0" y="31" width="112" height="2" fill="#620d3c" rx="1"/>
-      </svg>
-      <span class="ti-nav-meta">Learning Portal</span>
-    </div>
-    <div class="ti-nav-right">
-      <span class="ti-nav-user">Signed in as <strong id="s-nav-name"></strong></span>
-      <button class="ti-nav-signout" onclick="logout()">Sign out</button>
-    </div>
-  </nav>
-  <div class="page-shell">
-    <div class="page-body narrow">
-      <div class="s-hero">
-        <div class="s-hero-left">
-          <h2 id="s-hero-name">Welcome!</h2>
-          <p id="s-hero-email"></p>
-        </div>
-        <span class="s-hero-badge">Policy School</span>
-      </div>
-      <div class="card">
-        <div class="card-hd">Your Profile <span style="text-transform:none;font-weight:400;font-size:11px;letter-spacing:0;color:var(--ti-gray-400);margin-left:4px">— Summaries are personalised based on your tags</span></div>
-        <div class="profile-grid">
-          <div class="field" style="margin:0"><label>Full name</label><input type="text" id="e-name"/></div>
-        </div>
-        <div style="margin-top:1rem">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ti-gray-500);margin-bottom:.25rem">Tags / Areas of Interest</div>
-          <div style="font-size:12px;color:var(--ti-gray-400);margin-bottom:.5rem">Add sectors or topics (e.g. climate policy, AI regulation, defence). These guide how your summaries are personalised.</div>
-          <div class="tag-input-row">
-            <input type="text" id="interest-inp" placeholder="e.g. climate policy, AI regulation, defence…" onkeydown="if(event.key==='Enter')addTag()"/>
-            <button onclick="addTag()">Add</button>
-          </div>
-          <div class="tag-row" id="tag-row"></div>
-        </div>
-        <div style="margin-top:1.25rem;display:flex;align-items:center">
-          <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
-          <span class="saved-flash" id="saved-flash">✓ Saved</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-hd">Your Personalised Summaries</div>
-        <div id="sum-container">
-          <div class="empty-state">
-            <span class="icon">📬</span>
-            <p>No summaries yet.<br/>Your instructor will send one after each session.</p>
-          </div>
-        </div>
-      </div>
+<div class="db-modal-overlay" id="md-modal-overlay" onclick="if(event.target===this)closeMdModal()">
+  <div class="db-modal" style="max-width: 600px;">
+    <h3 id="md-modal-title">Edit .md Profile</h3>
+    <p id="md-modal-desc">Write context in Markdown to guide AI personalization.</p>
+    <textarea id="md-modal-textarea" rows="12" style="width:100%;border:var(--border);border-radius:var(--r-sm);padding:10px 12px;font:400 13px/1.5 monospace;background:var(--ti-white);color:var(--ti-black);outline:none;resize:vertical;" placeholder="e.g.,&#10;## Professional Background&#10;- Works in Climate Policy&#10;- Focuses on renewable energy transition&#10;&#10;## Goals&#10;- Wants to understand economic impacts of AI in energy..."></textarea>
+    <div class="db-modal-btns">
+      <button class="btn-sm" onclick="closeMdModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveMdProfile()">Save .md file</button>
     </div>
   </div>
-  <footer class="ti-footer">
-    <p>© 2010–2024 The Takshashila Institution. All rights reserved.</p>
-    <p>2nd floor, 46/1, Cobalt Building, Church Street, Bengaluru 560001</p>
-  </footer>
+</div>
+
+<div class="db-modal-overlay" id="db-modal-overlay" onclick="if(event.target===this)closeDbModal()">
+  <div class="db-modal">
+    <h3 id="db-modal-title">Manage Databases</h3>
+    <p id="db-modal-desc">Select or create a student database</p>
+    <div id="db-modal-body"></div>
+    <div class="db-modal-btns">
+      <button class="btn-sm" onclick="closeDbModal()">Cancel</button>
+      <button class="btn-primary" id="db-modal-confirm" onclick="confirmDbModal()">Confirm</button>
+    </div>
+  </div>
 </div>
 
 <script>
 const ADMIN_PASS = 'admin123';
-let students    = [];
-let summariesDB = {};
+// databases: { [dbId]: { id, name, students: [{email, name, mdProfile}], createdAt } }
+let databases   = {}; 
+let activeDbId  = null; 
+let students    = []; 
+let summariesDB = {}; 
 let apiKey      = '';
 let recordings  = [];
 let currentUser = null;
+let editingMdEmail = null; // Track which student's MD is being edited
+
+function genId() { return 'db_' + Date.now() + '_' + Math.floor(Math.random()*9999); }
+
+function saveState() {
+  try {
+    localStorage.setItem('ls_databases',  JSON.stringify(databases));
+    localStorage.setItem('ls_summaries',  JSON.stringify(summariesDB));
+  } catch(e) {}
+}
+
+function migrateLegacy() {
+  const legacyStudents  = localStorage.getItem('ls_students');
+  const legacySummaries = localStorage.getItem('ls_summaries');
+  if (!legacyStudents) return;
+  try {
+    const studs = JSON.parse(legacyStudents);
+    if (!studs.length) return;
+    const id   = genId();
+    const name = 'Default Database';
+    databases[id] = { id, name, students: studs, createdAt: Date.now() };
+    if (legacySummaries) {
+      const sums = JSON.parse(legacySummaries);
+      const isOldFormat = !Object.keys(sums).some(k => k.startsWith('db_'));
+      summariesDB[id] = isOldFormat ? sums : sums;
+    }
+    localStorage.removeItem('ls_students');
+    saveState();
+  } catch(e) {}
+}
 
 window.addEventListener('DOMContentLoaded', () => {
   try {
-    const s  = localStorage.getItem('ls_students');  if (s)  students    = JSON.parse(s);
-    const sm = localStorage.getItem('ls_summaries'); if (sm) summariesDB = JSON.parse(sm);
+    migrateLegacy();
+    const dbs = localStorage.getItem('ls_databases');
+    if (dbs) databases = JSON.parse(dbs);
+    const sms = localStorage.getItem('ls_summaries');
+    if (sms) summariesDB = JSON.parse(sms);
     const ak = localStorage.getItem('ls_apikey');
     if (ak) { apiKey = ak; document.getElementById('api-key-input').value = ak; document.getElementById('api-key-status').textContent = '✓ API key loaded'; }
   } catch(e) {}
+  renderDbSelect();
+  const ids = Object.keys(databases);
+  if (ids.length === 1) switchDatabase(ids[0]);
   checkReady();
-  if (students.length) renderAdminTable();
 });
-
-function saveState() {
-  try { localStorage.setItem('ls_students', JSON.stringify(students)); localStorage.setItem('ls_summaries', JSON.stringify(summariesDB)); } catch(e) {}
-}
 
 function goto(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
-}
-
-function switchTab(t) {
-  document.getElementById('tab-student').classList.toggle('active', t === 'student');
-  document.getElementById('tab-admin').classList.toggle('active', t === 'admin');
-  document.getElementById('form-student').style.display = t === 'student' ? 'block' : 'none';
-  document.getElementById('form-admin').style.display   = t === 'admin'   ? 'block' : 'none';
-}
-
-function studentLogin() {
-  const email   = document.getElementById('sl-email').value.trim().toLowerCase();
-  const pass    = document.getElementById('sl-pass').value.trim();
-  const student = students.find(s => s.email.toLowerCase() === email);
-  if (!student) { showErr('sl-err', 'No account found for this email. Contact your instructor.'); return; }
-  if (pass !== email.split('@')[0]) { showErr('sl-err', 'Incorrect password. Use the part of your email before @'); return; }
-  currentUser = { ...student, email: email, role: 'student' };
-  document.getElementById('s-nav-name').textContent = student.name || email;
-  try { const sm = localStorage.getItem('ls_summaries'); if (sm) summariesDB = JSON.parse(sm); } catch(e) {}
-  renderStudentPage();
-  goto('page-student');
 }
 
 function adminLogin() {
@@ -468,8 +443,6 @@ function adminLogin() {
 
 function logout() {
   currentUser = null;
-  document.getElementById('sl-email').value = '';
-  document.getElementById('sl-pass').value  = '';
   document.getElementById('al-pass').value  = '';
   goto('page-login');
 }
@@ -530,38 +503,71 @@ function processRows(rows) {
   const ei  = gi('email');
   if (ei < 0) { alert('File must have an "email" column.'); return; }
   const ni = gi('name', 'full name', 'fullname');
-  const ti = gi('tags', 'sectors', 'interests', 'areas of interest');
+  
   const out = [];
   for (let i = 1; i < rows.length; i++) {
     const r  = rows[i];
     const em = (r[ei] || '').toString().trim();
     if (!em) continue;
-    const parsedTags = (ti > -1 && r[ti])
-      ? r[ti].toString().split(/[,;]/).map(t => t.trim()).filter(Boolean)
-      : [];
+    
     const existing = students.find(s => s.email.toLowerCase() === em.toLowerCase());
-    // Preserve existing tags if student already in system and CSV has none
     out.push(existing
-      ? { ...existing, name: ni > -1 ? (r[ni] || existing.name || '').toString().trim() : existing.name, tags: parsedTags.length ? parsedTags : (existing.tags || []) }
-      : { email: em, name: ni > -1 ? (r[ni] || '').toString().trim() : '', tags: parsedTags }
+      ? { ...existing, name: ni > -1 ? (r[ni] || existing.name || '').toString().trim() : existing.name }
+      : { email: em, name: ni > -1 ? (r[ni] || '').toString().trim() : '', mdProfile: '' }
     );
   }
   students = out;
-  saveState();
-  renderAdminTable();
-  document.getElementById('csv-status').innerHTML = `<div class="chip-ok">✓ ${students.length} student${students.length !== 1 ? 's' : ''} loaded</div>`;
+  if (activeDbId) {
+    databases[activeDbId].students = students;
+    saveState();
+    renderAdminTable();
+    updateDbBadge();
+    updateGenTarget();
+    document.getElementById('csv-status').innerHTML = `<div class="chip-ok">✓ ${students.length} student${students.length !== 1 ? 's' : ''} loaded into <strong>${databases[activeDbId].name}</strong></div>`;
+  }
   checkReady();
 }
 
 function renderAdminTable() {
-  document.getElementById('student-tbody').innerHTML = students.map(s => `<tr>
-    <td style="font-weight:500;color:var(--ti-black)">${s.name || '—'}</td>
-    <td><a href="mailto:${s.email}" style="color:var(--ti-red);text-decoration:none">${s.email}</a></td>
-    <td>${(s.tags || []).length ? (s.tags || []).map(t => `<span style="display:inline-block;background:var(--ti-gray-100);border:var(--border);border-radius:20px;padding:2px 8px;font-size:11px;margin:1px 2px">${t}</span>`).join('') : '<span style="color:var(--ti-gray-400)">No tags — generic summary</span>'}</td>
-    <td><span class="st-dot ${(summariesDB[s.email.toLowerCase()] || []).length ? 'dot-sent' : 'dot-pending'}"></span>${(summariesDB[s.email.toLowerCase()] || []).length ? 'Sent' : 'Pending'}</td>
-  </tr>`).join('');
+  document.getElementById('student-tbody').innerHTML = students.map(s => {
+    const hasMd = s.mdProfile && s.mdProfile.trim().length > 0;
+    return `<tr>
+      <td style="font-weight:500;color:var(--ti-black)">${s.name || '—'}</td>
+      <td><a href="mailto:${s.email}" style="color:var(--ti-red);text-decoration:none">${s.email}</a></td>
+      <td>${hasMd ? '<span style="color:#10B981;font-size:12px;font-weight:600;">✓ Configured</span>' : '<span style="color:var(--ti-gray-400);font-size:12px;">Empty</span>'}</td>
+      <td><button class="btn-sm" onclick="openMdEditor('${s.email}')">✏️ Edit .md</button></td>
+    </tr>`;
+  }).join('');
   document.getElementById('student-table-wrap').style.display = students.length ? 'block' : 'none';
   checkReady();
+}
+
+/* ── VIRTUAL MD EDITOR ── */
+function openMdEditor(email) {
+  editingMdEmail = email;
+  const student = students.find(s => s.email === email);
+  if (!student) return;
+  
+  document.getElementById('md-modal-title').textContent = `Editing .md: ${student.name || email}`;
+  document.getElementById('md-modal-textarea').value = student.mdProfile || '';
+  document.getElementById('md-modal-overlay').classList.add('open');
+}
+
+function closeMdModal() {
+  document.getElementById('md-modal-overlay').classList.remove('open');
+  editingMdEmail = null;
+}
+
+function saveMdProfile() {
+  if (!editingMdEmail) return;
+  const idx = students.findIndex(s => s.email === editingMdEmail);
+  if (idx > -1) {
+    students[idx].mdProfile = document.getElementById('md-modal-textarea').value;
+    databases[activeDbId].students = students;
+    saveState();
+    renderAdminTable();
+  }
+  closeMdModal();
 }
 
 /* ── RECORDING (MULTIPLE FILES) ── */
@@ -597,22 +603,22 @@ function updateRecUI() {
 
 function checkReady() {
   const hasContent = recordings.length > 0 || (document.getElementById('paste-transcript') && document.getElementById('paste-transcript').value.trim() !== '');
-  document.getElementById('send-btn').disabled = !(students.length && apiKey && hasContent);
+  document.getElementById('send-btn').disabled = !(activeDbId && students.length && apiKey && hasContent);
 }
 
 /* ── PROMPT BUILDER ── */
 function buildPrompt(student, combinedTranscript, prevSummary) {
-  const tags    = (student.tags || []).filter(Boolean);
-  const hasTags = tags.length > 0;
   const name    = student.name || 'Student';
+  const profile = student.mdProfile || '';
+  const hasProfile = profile.trim().length > 0;
 
   let prompt = `You are an expert educator at the Takshashila Institution, India's leading public policy school.\n\n`;
   prompt += `STUDENT: ${name}\n`;
 
-  if (hasTags) {
-    prompt += `TAGS / SECTORS OF INTEREST: ${tags.join(', ')}\n\n`;
+  if (hasProfile) {
+    prompt += `STUDENT PROFILE CONTEXT (.md file):\n${profile}\n\n`;
   } else {
-    prompt += `TAGS / SECTORS OF INTEREST: None provided\n\n`;
+    prompt += `STUDENT PROFILE CONTEXT: None provided\n\n`;
   }
 
   if (prevSummary) {
@@ -621,7 +627,7 @@ function buildPrompt(student, combinedTranscript, prevSummary) {
 
   prompt += `THIS WEEK'S SESSION CONTENT:\n${combinedTranscript}\n\n`;
 
-  prompt += `TASK: Write a personalised learning summary for ${name}.\n\n`;
+  prompt += `TASK: Write a highly personalised learning summary for ${name}.\n\n`;
   prompt += `REQUIREMENTS:\n`;
   prompt += `1. Open with a warm, professional greeting using their name.\n`;
 
@@ -632,11 +638,11 @@ function buildPrompt(student, combinedTranscript, prevSummary) {
     prompt += `2. Summarise the session in 3-4 clearly titled sections using ## headers.\n`;
   }
 
-  if (hasTags) {
-    prompt += `${prevSummary ? '4' : '3'}. CRITICAL: For every concept, provide a concrete example or analogy drawn specifically from the student's tags (${tags.join(', ')}). Every example must connect to one of these sectors — do not use generic examples.\n`;
-    prompt += `${prevSummary ? '5' : '4'}. End with 2-3 actionable next steps relevant to their sectors.\n`;
+  if (hasProfile) {
+    prompt += `${prevSummary ? '4' : '3'}. CRITICAL: For every concept, provide a concrete example or analogy drawn SPECIFICALLY from the STUDENT PROFILE CONTEXT provided above. Do not use generic examples. Ground the teachings firmly in their specific background and goals.\n`;
+    prompt += `${prevSummary ? '5' : '4'}. End with 2-3 actionable next steps highly relevant to their profile context.\n`;
   } else {
-    prompt += `${prevSummary ? '4' : '3'}. Since no tags are provided, use clear, accessible examples that work for any reader — avoid jargon, prioritise clarity.\n`;
+    prompt += `${prevSummary ? '4' : '3'}. Since no profile context is provided, use clear, accessible examples that work for any reader — avoid heavy jargon, prioritise clarity.\n`;
     prompt += `${prevSummary ? '5' : '4'}. End with 2-3 general next steps for any learner.\n`;
   }
 
@@ -654,6 +660,7 @@ async function generateAndSend() {
     pasteText ? `--- Pasted Content ---\n${pasteText}` : ''
   ].filter(Boolean).join('\n\n');
 
+  if (!activeDbId) { alert('Please select a database first.'); return; }
   const includeRecap = document.getElementById('inc-recap').checked;
   const log  = document.getElementById('gen-log');
   const fill = document.getElementById('prog-fill');
@@ -711,12 +718,13 @@ async function generateAndSend() {
   for (let i = 0; i < students.length; i++) {
     const student  = students[i];
     const emailKey = student.email.toLowerCase();
-    const hasTags  = (student.tags || []).filter(Boolean).length > 0;
-    addLog(`[${i+1}/${students.length}] ${emailKey} — tags: ${hasTags ? student.tags.join(', ') : 'none (generic)'}`);
+    const hasProfile = (student.mdProfile || '').trim().length > 0;
+    addLog(`[${i+1}/${students.length}] ${emailKey} — .md profile: ${hasProfile ? 'configured' : 'empty (generic)'}`);
 
     let prevSummary = '';
-    if (includeRecap && summariesDB[emailKey] && summariesDB[emailKey].length > 0) {
-      prevSummary = summariesDB[emailKey][summariesDB[emailKey].length - 1].content;
+    const dbSumsForStudent = (summariesDB[activeDbId] || {})[emailKey] || [];
+    if (includeRecap && dbSumsForStudent.length > 0) {
+      prevSummary = dbSumsForStudent[dbSumsForStudent.length - 1].content;
       addLog(`  → Including recap from previous summary`);
     }
 
@@ -740,8 +748,9 @@ async function generateAndSend() {
       const summary = data?.content?.[0]?.text;
       if (!summary) throw new Error('API returned empty content: ' + JSON.stringify(data).substring(0, 200));
 
-      if (!summariesDB[emailKey]) summariesDB[emailKey] = [];
-      summariesDB[emailKey].push({
+      if (!summariesDB[activeDbId]) summariesDB[activeDbId] = {};
+      if (!summariesDB[activeDbId][emailKey]) summariesDB[activeDbId][emailKey] = [];
+      summariesDB[activeDbId][emailKey].push({
         id:      String(Date.now()) + String(Math.floor(Math.random() * 10000)),
         title:   sessionTitle,
         date:    new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
@@ -750,7 +759,7 @@ async function generateAndSend() {
       });
 
       saveState();
-      addLog(`  ✓ Stored (${summariesDB[emailKey].length} total for this student)`, 'ok');
+      addLog(`  ✓ Stored (${summariesDB[activeDbId][emailKey].length} total for this student)`, 'ok');
       successCount++;
     } catch (err) {
       addLog(`  ✗ Failed: ${err.message}`, 'er');
@@ -789,19 +798,20 @@ async function generateAndSend() {
 function renderAdminSummaries() {
   const q   = (document.getElementById('admin-search').value || '').toLowerCase();
   const flt = document.getElementById('admin-filter').value;
-  const totalSums = Object.values(summariesDB).reduce((a, b) => a + b.length, 0);
-  const withSums  = students.filter(s => (summariesDB[s.email.toLowerCase()] || []).length > 0).length;
+  const dbSums2 = (activeDbId && summariesDB[activeDbId]) ? summariesDB[activeDbId] : {};
+  const totalSums = Object.values(dbSums2).reduce((a, b) => a + b.length, 0);
+  const withSums  = students.filter(s => (dbSums2[s.email.toLowerCase()] || []).length > 0).length;
   document.getElementById('stat-students').textContent = students.length;
   document.getElementById('stat-total'   ).textContent = totalSums;
   document.getElementById('stat-reached' ).textContent = withSums;
   document.getElementById('stat-pending' ).textContent = students.length - withSums;
 
   let list = students.filter(s => {
-    const has = (summariesDB[s.email.toLowerCase()] || []).length > 0;
+    const has = (dbSums2[s.email.toLowerCase()] || []).length > 0;
     if (flt === 'with'    && !has) return false;
     if (flt === 'without' &&  has) return false;
     if (q) {
-      const hay = `${s.name} ${s.email} ${(s.tags || []).join(' ')}`.toLowerCase();
+      const hay = `${s.name} ${s.email}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -812,12 +822,11 @@ function renderAdminSummaries() {
   if (!list.length)     { el.innerHTML = '<div class="no-results">No students match your search.</div>'; return; }
 
   el.innerHTML = list.map(s => {
-    const sums    = summariesDB[s.email.toLowerCase()] || [];
+    const sums    = dbSums2[s.email.toLowerCase()] || [];
     const initials= (s.name || s.email).split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
     const safeId  = s.email.replace(/[@.]/g, '-');
-    const tagHtml = (s.tags || []).length
-      ? (s.tags || []).map(t => `<span style="display:inline-block;background:var(--ti-gray-100);border:var(--border);border-radius:20px;padding:1px 7px;font-size:11px;margin-right:3px">${t}</span>`).join('')
-      : `<span style="font-size:11px;color:var(--ti-gray-400)">No tags</span>`;
+    const hasMd   = s.mdProfile && s.mdProfile.trim().length > 0;
+    
     const items = sums.length
       ? [...sums].reverse().map(sm => `
           <div class="ssb-item">
@@ -839,7 +848,7 @@ function renderAdminSummaries() {
             <div class="ssb-av">${initials}</div>
             <div>
               <div class="ssb-name">${s.name || '—'}</div>
-              <div class="ssb-meta" style="margin-top:3px">${s.email}<span style="margin:0 6px;opacity:.4">·</span>${tagHtml}</div>
+              <div class="ssb-meta" style="margin-top:3px">${s.email}<span style="margin:0 6px;opacity:.4">·</span>${hasMd ? '<span style="color:#10B981;font-weight:600;">.md Profile Active</span>' : 'No .md Profile'}</div>
             </div>
           </div>
           <div class="ssb-hr">
@@ -858,7 +867,8 @@ function toggleSsb(id) {
 }
 
 function dlSummary(id, title, email) {
-  const sm = (summariesDB[(email || '').toLowerCase()] || []).find(s => s.id === id);
+  const dbSumsLookup = (activeDbId && summariesDB[activeDbId]) ? summariesDB[activeDbId] : {};
+  const sm = (dbSumsLookup[(email || '').toLowerCase()] || []).find(s => s.id === id);
   if (!sm) return;
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([sm.content], { type: 'text/plain' }));
@@ -866,75 +876,121 @@ function dlSummary(id, title, email) {
   a.click();
 }
 
-/* ── STUDENT PAGE ── */
-function renderStudentPage() {
-  const s = currentUser;
-  document.getElementById('s-hero-name' ).textContent = `Welcome, ${s.name || 'Student'}`;
-  document.getElementById('s-hero-email').textContent = s.email || '';
-  document.getElementById('e-name').value = s.name || '';
-  renderTags();
-  renderSummaries();
+/* ── DATABASE MANAGEMENT ── */
+function renderDbSelect() {
+  const sel = document.getElementById('db-select');
+  const ids  = Object.keys(databases);
+  sel.innerHTML = '<option value="">— Select a database —</option>'
+    + ids.map(id => `<option value="${id}" ${id === activeDbId ? 'selected' : ''}>${esc(databases[id].name)} (${(databases[id].students||[]).length} students)</option>`).join('');
 }
 
-function renderTags() {
-  document.getElementById('tag-row').innerHTML = (currentUser.tags || [])
-    .map((t, i) => `<div class="tag">${esc(t)}<button onclick="removeTag(${i})">×</button></div>`).join('');
-}
-
-function addTag() {
-  const inp = document.getElementById('interest-inp');
-  const v   = inp.value.trim(); if (!v) return;
-  if (!currentUser.tags) currentUser.tags = [];
-  currentUser.tags.push(v); inp.value = ''; renderTags();
-}
-
-function removeTag(i) { currentUser.tags.splice(i, 1); renderTags(); }
-
-function saveProfile() {
-  currentUser.name = document.getElementById('e-name').value.trim();
-  const idx = students.findIndex(s => s.email === currentUser.email);
-  if (idx > -1) { students[idx] = { ...students[idx], name: currentUser.name, tags: currentUser.tags }; saveState(); }
-  document.getElementById('s-hero-name').textContent = `Welcome, ${currentUser.name || 'Student'}`;
-  document.getElementById('s-nav-name').textContent  = currentUser.name || currentUser.email;
-  const fl = document.getElementById('saved-flash'); fl.style.display = 'inline';
-  setTimeout(() => fl.style.display = 'none', 2500);
-}
-
-function renderSummaries() {
-  const container = document.getElementById('sum-container');
-  const sums      = summariesDB[(currentUser.email || '').toLowerCase()] || [];
-  if (!sums.length) {
-    container.innerHTML = `<div class="empty-state"><span class="icon">📬</span><p>No summaries yet.<br/>Your instructor will send one after each session.</p></div>`;
-    return;
+function switchDatabase(id) {
+  activeDbId = id || null;
+  students   = activeDbId ? (databases[activeDbId].students || []) : [];
+  const hasDbs = !!activeDbId;
+  document.getElementById('db-upload-area').style.display   = hasDbs ? 'block' : 'none';
+  document.getElementById('db-no-selection').style.display  = hasDbs ? 'none'  : 'block';
+  document.getElementById('btn-db-rename').disabled  = !hasDbs;
+  document.getElementById('btn-db-delete').disabled  = !hasDbs;
+  document.getElementById('student-table-wrap').style.display = 'none';
+  document.getElementById('csv-status').innerHTML = '';
+  if (hasDbs) {
+    document.getElementById('db-upload-label').textContent = databases[activeDbId].name;
+    renderAdminTable();
+    updateDbBadge();
+    updateGenTarget();
+  } else {
+    document.getElementById('db-badge').style.display = 'none';
+    updateGenTarget();
   }
-  container.innerHTML = `<div class="sum-list">${[...sums].reverse().map(s => `
-    <div class="sum-card">
-      <div class="sum-card-top">
-        <div class="sum-card-title">${esc(s.title || 'Session Summary')}${s.hasRecap ? ' <span style="font-size:11px;background:#e0f2fe;color:#0369a1;border-radius:20px;padding:2px 9px;font-weight:600;margin-left:6px">Includes Recap</span>' : ''}</div>
-        <span class="sum-card-date">${s.date}</span>
-      </div>
-      <div class="sum-card-body" id="sc-${s.id}">${fmtMd(s.content)}</div>
-      <div class="sum-card-foot">
-        <button class="btn-sm" onclick="saveSess('${s.id}')">💾 Save to session</button>
-        <button class="btn-sm" onclick="dlStudentSummary('${s.id}','${esc(s.title || 'summary')}')">📥 Download .txt</button>
-        <span class="action-flash" id="af-${s.id}">✓ Saved</span>
-      </div>
-    </div>`).join('')}</div>`;
+  renderDbSelect();
+  checkReady();
 }
 
-function saveSess(id) {
-  sessionStorage.setItem(`sum_${id}`, document.getElementById(`sc-${id}`).innerText);
-  const af = document.getElementById(`af-${id}`); af.style.display = 'inline';
-  setTimeout(() => af.style.display = 'none', 2500);
+function updateDbBadge() {
+  if (!activeDbId) { document.getElementById('db-badge').style.display = 'none'; return; }
+  const badge = document.getElementById('db-badge');
+  badge.style.display = 'inline-flex';
+  badge.textContent   = `${students.length} student${students.length !== 1 ? 's' : ''}`;
 }
 
-function dlStudentSummary(id, title) {
-  const sm = (summariesDB[(currentUser.email || '').toLowerCase()] || []).find(s => s.id === id);
-  if (!sm) return;
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([sm.content], { type: 'text/plain' }));
-  a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`;
-  a.click();
+function updateGenTarget() {
+  const info  = document.getElementById('gen-target-info');
+  const label = document.getElementById('gen-target-label');
+  const count = document.getElementById('gen-target-count');
+  if (!activeDbId) { info.style.display = 'none'; return; }
+  info.style.display  = 'block';
+  label.textContent   = databases[activeDbId].name;
+  count.textContent   = `— ${students.length} student${students.length !== 1 ? 's' : ''}`;
+}
+
+let dbModalMode = '';
+
+function openDbModal(mode) {
+  dbModalMode = mode;
+  const overlay = document.getElementById('db-modal-overlay');
+  const title   = document.getElementById('db-modal-title');
+  const desc    = document.getElementById('db-modal-desc');
+  const body    = document.getElementById('db-modal-body');
+  const confirm = document.getElementById('db-modal-confirm');
+
+  if (mode === 'new') {
+    title.textContent   = 'Create New Database';
+    desc.textContent    = 'Give this database a name (e.g. "GCPP Batch 12", "Executive Programme")';
+    body.innerHTML      = `<input type="text" id="db-modal-name-input" placeholder="Database name…" style="width:100%;border:var(--border);border-radius:var(--r-sm);padding:10px 12px;font:400 14px/1 var(--font);outline:none;border-color:var(--ti-red)" maxlength="60"/>`;
+    confirm.textContent = 'Create';
+    setTimeout(() => document.getElementById('db-modal-name-input').focus(), 50);
+  } else if (mode === 'rename') {
+    title.textContent   = 'Rename Database';
+    desc.textContent    = `Rename "${databases[activeDbId]?.name}"`;
+    body.innerHTML      = `<input type="text" id="db-modal-name-input" value="${esc(databases[activeDbId]?.name || '')}" style="width:100%;border:var(--border);border-radius:var(--r-sm);padding:10px 12px;font:400 14px/1 var(--font);outline:none;border-color:var(--ti-red)" maxlength="60"/>`;
+    confirm.textContent = 'Rename';
+    setTimeout(() => { const el = document.getElementById('db-modal-name-input'); if(el){el.focus();el.select();} }, 50);
+  } else if (mode === 'delete') {
+    title.textContent   = 'Delete Database';
+    desc.textContent    = `This will permanently delete "${databases[activeDbId]?.name}" and all its summaries. This cannot be undone.`;
+    body.innerHTML      = `<div style="background:#fdf0f0;border:1px solid #f0c4c4;border-radius:var(--r-sm);padding:10px 13px;font-size:13px;color:var(--ti-red)">⚠ ${(databases[activeDbId]?.students||[]).length} students and ${Object.values((summariesDB[activeDbId]||{})).reduce((a,b)=>a+b.length,0)} summaries will be deleted.</div>`;
+    confirm.textContent = 'Delete';
+    confirm.style.background = '#c0392b';
+  }
+
+  overlay.classList.add('open');
+}
+
+function closeDbModal() {
+  document.getElementById('db-modal-overlay').classList.remove('open');
+  document.getElementById('db-modal-confirm').style.background = '';
+}
+
+function confirmDbModal() {
+  if (dbModalMode === 'new') {
+    const nameEl = document.getElementById('db-modal-name-input');
+    const name   = nameEl ? nameEl.value.trim() : '';
+    if (!name) { nameEl.style.borderColor = 'red'; return; }
+    const id = genId();
+    databases[id] = { id, name, students: [], createdAt: Date.now() };
+    saveState();
+    renderDbSelect();
+    switchDatabase(id);
+  } else if (dbModalMode === 'rename') {
+    const nameEl = document.getElementById('db-modal-name-input');
+    const name   = nameEl ? nameEl.value.trim() : '';
+    if (!name) { nameEl.style.borderColor = 'red'; return; }
+    databases[activeDbId].name = name;
+    saveState();
+    renderDbSelect();
+    document.getElementById('db-upload-label').textContent = name;
+    updateGenTarget();
+  } else if (dbModalMode === 'delete') {
+    delete databases[activeDbId];
+    delete summariesDB[activeDbId];
+    saveState();
+    activeDbId = null;
+    students   = [];
+    renderDbSelect();
+    switchDatabase('');
+  }
+  closeDbModal();
 }
 
 function fmtMd(txt) {
