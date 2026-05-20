@@ -6,6 +6,7 @@
 * **Current Role & Industry:** [e.g., Policy Analyst at a Tech Think Tank / Software Engineer transitioning to Public Policy]
 * **Educational Background:** [e.g., B.Tech in Computer Science / Masters in Economics]
 * **Core Motivation:** [Briefly explain *why* you are taking this course. e.g., "I want to understand how to regulate emerging technologies without stifling innovation."]
+* **Proficiency:** [Briefly explain your proficiency in tech policy (sector-specific, based on your work, etc.)]
 
 ## 2. Areas of Interest & Sectors
 *List 3-5 specific tags or sectors you want your examples drawn from.*
